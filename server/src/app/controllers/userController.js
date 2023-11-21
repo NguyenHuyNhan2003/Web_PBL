@@ -32,11 +32,11 @@ class userController{
 
         try{
             const user = await User.addUser(email, password)
-            //const token = this.createToken(user._id)
+            const token = this.createToken(user._id)
 
             console.log(user)
-            res.status(200).json({email, user})
-            //res.status(200).json({email, token})
+            //res.status(200).json({email, user})
+            res.status(200).json({email, token})
         } catch (error){
             console.log(error.message)
             res.status(400).json({error: error.message})
