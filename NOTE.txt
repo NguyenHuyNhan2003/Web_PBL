@@ -1,0 +1,11 @@
+thêm trong server
+ -requireAuth.js trong until để bảo vệ api routes (dùng cho những chức năng cần đăng nhập)
+    *cần thêm router.use(requireAuth) trên các dòng lệnh của các routes cần đăng nhập
+
+ -userController.js, models/User.js và routes/user.js để admin đăng nhập và tạo tài khoản
+ -.env để lưu các biến muốn bảo mật như
+   +mongoURI
+   +PORT
+   +SECRET dùng cho token
+  --> gọi bằng process.env.tên_biến 
+ -trong PostController thêm scrape để chạy file scraper.py qua nodejs
