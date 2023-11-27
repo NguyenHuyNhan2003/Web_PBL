@@ -9,3 +9,16 @@ thêm trong server
    +SECRET dùng cho token
   --> gọi bằng process.env.tên_biến 
  -trong PostController thêm scrape để chạy file scraper.py qua nodejs
+
+
+                                          ***NEW***
+- thêm trường role trong User.js
+
+- làm addUser trong userController sẽ mặc định role là 'user'
+
+- trong requireAuth.js:
+  + req.user = await User.findOne({_id}).select('role'):
+   Sử dụng _id để truy vấn cơ sở dữ liệu và lấy thông tin người dùng, chủ yếu là trường role.
+   Gán thông tin người dùng (role) vào đối tượng req.user
+
+- thêm update_user_role trong usercontroller
