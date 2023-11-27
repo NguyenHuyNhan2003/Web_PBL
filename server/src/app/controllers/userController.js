@@ -27,15 +27,17 @@ class userController{
 
     addUser = async(req, res) =>{
         const {email, password} = req.body
+        //----admin account
         //const email = "email@gmail.com"
-        //const password = "1234"
+        //const password = "123qweQWE!@#"
+        //const role = "admin"
 
+        const role = "user"
         try{
-            const user = await User.addUser(email, password)
+            const user = await User.addUser(email, password, role)
             const token = this.createToken(user._id)
 
             console.log(user)
-            //res.status(200).json({email, user})
             res.status(200).json({email, token})
         } catch (error){
             console.log(error.message)
@@ -43,6 +45,17 @@ class userController{
         }
     }
 
+    update_user_role = async(req, res) =>{
+        const {email} = req.body
+
+        const user = await User.findOneAndUpdate({email}, {role: 'admin'})
+
+        if(!user){
+            res.status(400).json({error: "can't find user"})
+        }
+
+        res.status(200).json({user})
+    }
 }
 
 module.exports = new userController

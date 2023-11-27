@@ -13,6 +13,10 @@ const Users = new Schema({
     password: {
         type:String,
         required: true
+    },
+    role: {
+        type:String,
+        required: true
     }
     
 },{
@@ -20,7 +24,7 @@ const Users = new Schema({
 });
 
 // add user 
-Users.statics.addUser = async function(email, password) {
+Users.statics.addUser = async function(email, password, role) {
     //validation
     if(!email || !password){
         throw Error("No empty field!")
@@ -43,7 +47,7 @@ Users.statics.addUser = async function(email, password) {
     const salt = await bcrypt.genSalt(10)
     const hass = await bcrypt.hash(password, salt)
 
-    const user = await this.create({email, password: hass})
+    const user = await this.create({email, password: hass, role})
 
     return user
 }
