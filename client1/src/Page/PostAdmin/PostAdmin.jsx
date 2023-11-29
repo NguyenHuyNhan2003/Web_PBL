@@ -131,7 +131,7 @@ export default function PostAdmin() {
                         >
                           <a href={`/Edit/recruitment/${item._id}`}>Edit</a>
                         </Button>
-                        <Button color='red' style={{ width: '80px' }} onClick={() => handleDelete(item._id)}>
+                        <Button className={{color:'yellow'}}  style={{ width: '80px' }} onClick={() => handleDelete(item._id)}>
                           Delete
                         </Button>
                       </div>

@@ -89,7 +89,13 @@ create(req,res,next){
 createpost(req,res,next){
    const recruitment = new Recruitment(req.body);
    recruitment.save()
-       .then(()=>console.log('Recruitment saved:',req.body ))
+   .then(savedRecruitment => {
+    console.log('Recruitment saved:', savedRecruitment);
+    res.status(201).json({
+      message: 'Recruitment created successfully',
+      recruitment: savedRecruitment
+    });
+  })
        .catch(error => {
            console.error('Error saving recruitment:', error);
        })

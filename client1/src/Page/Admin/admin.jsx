@@ -126,7 +126,9 @@ function JobPostingForm() {
     khuvuc: '',
     level: 'entry',
     anh: '',
-    timedang: ''
+    timedang: '',
+    language:'',
+    id: ''
   })
 
   const handleChange = (event) => {
@@ -138,19 +140,43 @@ function JobPostingForm() {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     // Xử lý dữ liệu biểu mẫu, ví dụ: gửi dữ liệu đến máy chủ hoặc thực hiện các thao tác khác
-    console.log('Submitted data:', formData)
+    console.log('Submitted data:', formData);
+    
     axios
       .post('http://localhost:5000/post/create', formData)
       .then((response) => {
-        console.log('Response:', response.data);
-        alert("Thành công thêm");
+        // Kiểm tra xem phản hồi có thành công không (status code 2xx)
+        if (response.status >= 200 && response.status < 300) {
+          console.log('Recruitment saved:', response.data);
+          // Trả về phản hồi cho client
+          alert('Thành công thêm');
+          
+          // Đặt lại giá trị mặc định cho các trường sau khi submit
+          setFormData({
+            congti: '',
+            luong: '',
+            vitri: '',
+            khuvuc: '',
+            level: 'entry',
+            anh: '',
+            timedang: '',
+            language: '',
+            id: ''
+          });
+        } else {
+          // Xử lý trường hợp không thành công
+          console.error('Error:', response.status, response.statusText);
+          alert('Không thể thêm bài đăng');
+        }
       })
       .catch((error) => {
-        console.error('Error:', error)
-      })
-  }
+        // Xử lý lỗi trong quá trình gửi request
+        console.error('Error:', error);
+        alert('Đã có lỗi xảy ra');
+      });
+  };
 
   return (
     <form className='vertical-form' onSubmit={handleSubmit}>
@@ -227,6 +253,30 @@ function JobPostingForm() {
           required
         />
       </div>
+      <div className='form-group'>
+        <label htmlFor='skills'>Language</label>
+        <input
+          className='input-admin'
+          type='text'
+          id='language'
+          name='language'
+          value={formData.language}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className='form-group'>
+        <label htmlFor='skills'>IdPost</label>
+        <input
+          className='input-admin'
+          type='text'
+          id='idpost'
+          name='id'
+          value={formData.id}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
       <div className='form-group'>
         <label htmlFor='postingTime'>Thời Gian Đăng:</label>
@@ -241,7 +291,8 @@ function JobPostingForm() {
         />
       </div>
 
-      <button type='submit'>Đăng Tuyển Dụng</button>
+      <button style={{ background: 'yellow' }} type='submit'>Đăng Tuyển Dụng</button>
+
     </form>
   )
 }
