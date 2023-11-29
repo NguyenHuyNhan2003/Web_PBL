@@ -22,3 +22,51 @@ thêm trong server
    Gán thông tin người dùng (role) vào đối tượng req.user
 
 - thêm update_user_role trong usercontroller
+
+
+
+**************************   (UPDATE 29/11/2023)   **************************
+
+- requireAuth.js đưa vào folder middleware
+
+
+- trong models/Post bỏ đi trường id và thêm post_url
+
+
+- trong models/User thêm các hàm:
+   + change_pass: để đổi mật khẩu
+
+
+- trong userController thêm các chức năng:
+   + change_password: gọi change_pass để đổi mật khẩu
+
+
+
+- trong routes/index có thêm:
+   + const userRouter = require('./user')
+
+   + app.use('/user',userRouter)
+
+
+- trong routes/user có thêm:
+   + const requireAuth = require('../app/util/requireAuth')
+
+   + router.use(requireAuth): cần đăng nhập để tiếp tục
+      router.post('/changepass', userController.change_password): để kiểm đổi mật khẩu tài khoản
+
+
+- trong routes/post có thêm:
+   + router.post('/sendmail',PostController.send_gmail): gửi mail
+
+   + const requireAuth = require('../app/util/requireAuth')
+
+   + router.use(requireAuth): cần đăng nhập để tiếp tục
+
+
+- trong userController thêm:
+   + send_mail: gửi mail
+
+#LƯU Ý:
+   - scrape trong PostController chưa có router, thêm nếu cần
+
+************************** (UPDATE 29/11/2023)-END **************************

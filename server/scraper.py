@@ -184,7 +184,7 @@ def save_excel_to_mongoDB():
         df = pd.read_excel(path)
         data = df.to_dict('records')
         # insert data to mongodb
-        collection.delete_many({})
+        collection.delete_many({}) #delete old posts
         collection.insert_many(data)
         print("Inserted ", len(data), " posts to MongoDB!")
     except Exception as e:
