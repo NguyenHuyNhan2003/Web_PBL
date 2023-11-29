@@ -4,6 +4,9 @@ const {mutipleMongooseToObject} = require('../util/mongose');
 const router = express.Router();
 const Posts = require('../models/Post');
 const Recruitment = require('../models/Recruitment');
+const nodemailer = require('nodemailer')
+require('dotenv').config()
+
 class PostController{
 //delete [post/delete/:id]
 deletebyid(req,res,next){
@@ -91,6 +94,35 @@ createpost(req,res,next){
            console.error('Error saving recruitment:', error);
        })
     }
+
+send_gmail = async(req, res) =>{
+    const email = req.user //https://ethereal.email/create tạo email để test
+    const sender = process.env.EMAIL
+
+    const config = {
+        service: 'gmail',
+        auth: {
+            user: sender,
+            pass: process.env.MAIL_PASS
+        }
+    }
+    const transporter = nodemailer.createTransport(config)
+
+    const mail = {
+        from: sender,
+        to: email,
+        subject: 'ĐĂNG KÝ ỨNG TUYỂN',
+        text: 'Bạn đã đăng ký ứng tuyển thành công!'
+    }
+
+    transporter.sendMail(mail)
+    .then((result)=>{
+        res.status(200).json({result})
+    }).catch(error =>{
+        res.status(400).json({error: error.message})
+    });
+}
+
 scrape = async(req,res,next) => {
     exec('py scraper.py', (error, stdout, stderr) => {
         if (error) {
