@@ -9,3 +9,4 @@ thêm trong server
    +SECRET dùng cho token
   --> gọi bằng process.env.tên_biến 
  -trong PostController thêm scrape để chạy file scraper.py qua nodejs
+ 

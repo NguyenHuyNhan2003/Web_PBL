@@ -8,7 +8,8 @@ const recruitments = new Schema({
     level: {type:String},
     anh: {type:String},
     language :{type:String},
-    timedang:{type : String}
+    timedang:{type : String},
+    id:{type:String}
 },{
     timestamps:true
 });

@@ -9,19 +9,19 @@ import Detailcompany from  '../Page/Detail_Company/detail_company.jsx'
 import Admin from '../Page/Admin/admin.jsx'
 import PostAdmin from '../Page/PostAdmin/PostAdmin.jsx'
 import EditAdmin from '../Page/EditAdmin/index.jsx'
+import LoginPage from '../Page/LoginPage/index.jsx'
 const publicRouter = [
   { path: '/Edit/recruitment/:_id', commponent: EditAdmin, Layout: 'Admin' },
   { path: '/', commponent: Home },
   { path: '/Home', commponent: Home },
-
   { path: '/Analytics', commponent: Analisic },
   { path: '/Recruitment', commponent: Recruitment },
   { path: '/post/by/:id', commponent: Detail },
   { path: '/conpany/name/:company', commponent: Detailcompany },
   { path: '/Admin', commponent: Admin, Layout: 'Admin' },
   { path: '/AddPost', commponent: Admin, Layout: 'Admin' },
-  { path: '/PostAdmin', commponent: PostAdmin, Layout: 'Admin' }
-
+  { path: '/PostAdmin', commponent: PostAdmin, Layout: 'Admin' },
+  { path: '/Login', commponent: LoginPage, Layout: 'Login' }
 ]
 // phải đăng nhập mới xem dc
 const privateRouter = [{}]

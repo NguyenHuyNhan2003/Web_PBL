@@ -11,16 +11,18 @@ import { publicRouter } from './routers/index.js'
 import Default from './Layout/DefaultLayout/index.jsx'
 import AdminLayout from './Layout/AdminLayout/index.jsx'
 import { Fragment } from 'react'
+import Login from './Layout/LoginLayout/index.jsx'
 function App() {
   return (
     <BrowserRouter>
       <div className='App'>
-   
         <Routes>
           {publicRouter.map((route, index) => {
-            var  Layout = Default ;
-            if(route.Layout == "Admin"){
-              Layout = AdminLayout;
+            var Layout = Default
+            if (route.Layout == 'Admin') {
+              Layout = AdminLayout
+            } else if (route.Layout == 'Login') {
+              Layout = Login
             }
             const Page = route.commponent
             return (
