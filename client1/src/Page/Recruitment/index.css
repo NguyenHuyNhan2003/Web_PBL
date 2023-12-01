@@ -4,10 +4,9 @@ html{
 .heading{
   width: 100%;
   padding:  20px;
-  background-color:hwb(123 11% 20%);
+  background: linear-gradient(to right, #56CCF2, #2F80ED);
   font-size: 18px;
-  padding-top: 30px;
-      
+  padding-top: 30px; 
   }
   .heading_search{
       display: flex;

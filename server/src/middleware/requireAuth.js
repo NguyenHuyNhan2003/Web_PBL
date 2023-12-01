@@ -5,11 +5,6 @@ require('dotenv').config()
 // const requireAuth = async (req, res, next) => {
 //     // verify authentication
 //     const {authorization} = req.headers //lấy token từ header
-
-//     if(!authorization){
-//         res.status(401).json({error: "Authorization token required"})
-//     }
-
 //     const token = authorization//.split('.')[1]
 //     // console.log("token: " + token)
 //     try{

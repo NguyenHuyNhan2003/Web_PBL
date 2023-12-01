@@ -6,10 +6,12 @@ const requireAuth = require('../middleware/requireAuth');
 const Post = require('../app/models/Post');
 
 router.get('/',PostController.show);
+
 router.get('/by/:id',PostController.getbyid);
 router.get('/create',PostController.create);
 router.get('/recruitment',PostController.cruitment);
 router.post('/sendmail',PostController.send_gmail)
+router.get('/recruitment/by/:id',PostController.getrecruitmentbyid)
 //cần đăng nhập để truy cập các route dưới
 
 router.get('/edit/recruitment/:_id',PostController.editbyid);
@@ -20,6 +22,7 @@ router.post('/scraper',PostController.scrape)
 
 router.use(requireAuth.AuthAdmin) // cho những phần cần admin đăng nhập
 router.use(requireAuth.AuthUser) // cho những phần cần user đăng nhập
+
 
 module.exports = router;
 
