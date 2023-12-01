@@ -8,3 +8,42 @@ thêm trong server
    +PORT
    +SECRET dùng cho token
   --> gọi bằng process.env.tên_biến 
+
+*************************** UPDATE 1/12/2023 ***************************
+
+- trong scraper.py, hàm filter_post_data có lấy thêm trường post_id
+
+
+- requireAuth.js chia thành
+ 
+   + AuthAdmin để phân quyền cho admin
+   
+   + AuthUser để phân quyền cho user
+
+   LƯU Ý: trong các file mục routes: 
+          router.use(requireAuth.AuthAdmin) 
+          router.use(requireAuth.AuthUser) 
+         đang để ở dưới cùng; cần chỉnh lại phù hợp với nhu cầu phân quyền (để trên các routes cần đăng nhập và ở dưới các routes không cần đăng nhập)
+
+
+- models/Posts.js khôi phục lại trường id
+
+
+- userController.js khôi phục lại các hàm
+  
+   + addUser: để thêm người dùng (mặc định mới thêm là user)
+
+   + demote_user_role: đưa tài khoản từ admin thành user
+
+   + update_user_role: cấp quyền admin cho tài khoản
+
+- các router tương ứng với các hàm trong userController:
+  
+   + router.post('/adduser', userController.addUser)
+
+   + router.post('/demoteuser', userController.demote_user_role)
+
+   + router.post('/updaterole', userController.update_user_role)
+
+*************************** END OF UPDATE ***************************
+

@@ -102,7 +102,8 @@ createpost(req,res,next){
     }
 
 send_gmail = async(req, res) =>{
-    const email = req.user //https://ethereal.email/create tạo email để test
+    const {cv, congti, email, fullname, introduction, phonenumber} = req.body
+    //https://ethereal.email/create tạo email để test
     const sender = process.env.EMAIL
 
     const config = {
@@ -118,7 +119,11 @@ send_gmail = async(req, res) =>{
         from: sender,
         to: email,
         subject: 'ĐĂNG KÝ ỨNG TUYỂN',
-        text: 'Bạn đã đăng ký ứng tuyển thành công!'
+        text: 'Company: ' + congti + "\n"
+            + 'Email: ' + email + "\n"
+            + 'Name: ' + fullname + '\n'
+            + 'Introduction: ' + introduction + '\n'
+            + 'Phone number: ' + phonenumber + '\n',
     }
 
     transporter.sendMail(mail)
