@@ -10,6 +10,7 @@ import Admin from '../Page/Admin/admin.jsx'
 import PostAdmin from '../Page/PostAdmin/PostAdmin.jsx'
 import EditAdmin from '../Page/EditAdmin/index.jsx'
 import LoginPage from '../Page/LoginPage/index.jsx'
+import Signup from '../Page/Signup/index.jsx'
 const publicRouter = [
   { path: '/Edit/recruitment/:_id', commponent: EditAdmin, Layout: 'Admin' },
   { path: '/', commponent: Home },
@@ -21,7 +22,8 @@ const publicRouter = [
   { path: '/Admin', commponent: Admin, Layout: 'Admin' },
   { path: '/AddPost', commponent: Admin, Layout: 'Admin' },
   { path: '/PostAdmin', commponent: PostAdmin, Layout: 'Admin' },
-  { path: '/Login', commponent: LoginPage, Layout: 'Login' }
+  { path: '/Login', commponent: LoginPage, Layout: 'Login' },
+  { path: '/Signup', commponent: Signup, Layout: 'Login' }
 ]
 // phải đăng nhập mới xem dc
 const privateRouter = [{}]

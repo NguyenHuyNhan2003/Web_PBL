@@ -24,14 +24,16 @@ export default function App() {
       </NavbarContent>
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
-          <Link href='#' className='navbar-link'>Login</Link>
+          <Link href='/Login' className='navbar-link'>Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color='primary' href='#' variant='flat'>
-            Sign Up
-          </Button>
+        
+          <Link href='/SignUp' className='navbar-link'>Sign Up</Link>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
   )
 }
+  // <Button as={Link} color='primary' href='#' variant='flat'>
+          //   Sign Up
+          // </Button>

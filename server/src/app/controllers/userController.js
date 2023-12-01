@@ -16,7 +16,6 @@ class userController{
             const user = await User.login(email, password)
             // create token
             const token = this.createToken(user._id)
-
             console.log(user)
             res.status(200).json({email, token})
         } catch (error){
@@ -86,7 +85,6 @@ class userController{
             console.log(error.message)
             res.status(400).json({error: error.message})
         }
-
     }
 }
 

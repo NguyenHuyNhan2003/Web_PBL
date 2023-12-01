@@ -8,15 +8,21 @@ export default function Detail() {
   const { id } = useParams()
   const [data, setData] = useState([])
   const [applicationStatus, setApplicationStatus] = useState(false)
-  const [showModal, setShowModal] = useState(false);
-
-  
-
+  const [showModal, setShowModal] = useState(false)
+  const [recruitment, setRecruitment] = useState([])
+  const [Congti, setCongti] = useState([])
   useEffect(() => {
     fetch(`http://localhost:5000/post/by/${id}`)
       .then((result) => result.json())
       .then((data) => {
         setData(data)
+      })
+  }, [id])
+  useEffect(() => {
+    fetch(`http://localhost:5000/post/recruitment/by/${id}`)
+      .then((result) => result.json())
+      .then((data) => {
+        setCongti(data)
       })
   }, [id])
 
@@ -49,36 +55,55 @@ export default function Detail() {
         )}
       </div>
 
-      {showModal && <ApplicationModal onClose={handleModalClose} onApply={handleApply} />}
+      {showModal && <ApplicationModal onClose={handleModalClose} onApply={handleApply} Congti ={Congti}/>}
     </div>
   )
 }
-
 // ApplicationModal.js
-function ApplicationModal({ onClose, onApply }) {
+function ApplicationModal({ onClose, onApply,Congti }) {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phoneNumber: '',
     cv: '',
-    introduction: ''
+    introduction: '',
+    congti : Congti.congti
   })
-
+  console.log(formData);
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({ ...prevData, [name]: value }))
   }
-
   const handleSubmit = () => {
     // Thực hiện các logic xử lý form (ví dụ: gửi yêu cầu đến máy chủ)
+    console.log('Success:', formData)
     onApply(formData)
+    // Gửi yêu cầu POST đến máy chủ
+    fetch('http://localhost:5000/post/sendmail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Xử lý phản hồi từ máy chủ (nếu cần)
+        console.log('Success:', data)
+      })
+      .catch((error) => {
+        // Xử lý lỗi
+        console.error('Error:', error)
+        
+      })
+    // Đóng modal sau khi gửi yêu cầu
     onClose()
   }
 
   return (
     <div className='modal-overlay'>
       <div className='modal-content'>
-        <h2>Ứng tuyển ngay</h2>
+        <h2>Ứng tuyển ngay <span style={{ fontSize: '20px', color: 'red' }}>{Congti.congti}</span></h2>
         <label>
           Họ tên:
           <input type='text' name='fullName' value={formData.fullName} onChange={handleChange} />

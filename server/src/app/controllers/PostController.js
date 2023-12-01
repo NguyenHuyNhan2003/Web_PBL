@@ -69,6 +69,19 @@ getbyid(req, res, next) {
             })
             .catch(next);
         }
+
+    // get [post/recruitment/by/id]
+    getrecruitmentbyid(req, res, next) {
+        const idd = req.params.id;
+        console.log(idd);
+            Recruitment.findOne({id:idd})
+                .then(element => {
+                    console.log(element);
+                    res.json(element);
+                  
+                })
+                .catch(next);
+    }
  //get [/data/]
  show(req,res,next){
   Posts.find({})
