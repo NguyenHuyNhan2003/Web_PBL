@@ -24,61 +24,61 @@ class userController{
         }
     }
 
-    // addUser = async(req, res) =>{
-    //     const {email, password} = req.body
-    //     //----admin account
-    //     // const email = "email@gmail.com"
-    //     // const password = "123qweQWE!@#"
-    //     // const role = "admin"
+    addUser = async(req, res) =>{
+        const {email, password} = req.body
+        //----admin account
+        // const email = "email@gmail.com"
+        // const password = "123qweQWE!@#"
+        // const role = "admin"
 
-    //     const role = "user"
-    //     try{
-    //         const user = await User.addUser(email, password, role)
-    //         const token = this.createToken(user._id)
+        const role = "user"
+        try{
+            const user = await User.addUser(email, password, role)
+            const token = this.createToken(user._id)
 
-    //         console.log(user)
-    //         res.status(200).json({email, token})
-    //     } catch (error){
-    //         console.log(error.message)
-    //         res.status(400).json({error: error.message})
-    //     }
-    // }
+            console.log(user)
+            res.status(200).json({email, token})
+        } catch (error){
+            console.log(error.message)
+            res.status(400).json({error: error.message})
+        }
+    }
 
-    // update_user_role = async(req, res) =>{
-    //     const email = req.body
+    update_user_role = async(req, res) =>{
+        const {email} = req.body
 
-    //     const user = await User.findOneAndUpdate({email}, {role: 'admin'})
+        const user = await User.findOneAndUpdate({email}, {role: 'admin'})
 
-    //     if(!user){
-    //         res.status(400).json({error: "can't find user"})
-    //     }
+        if(!user){
+            res.status(400).json({error: "can't find user"})
+        }
 
-    //     res.status(200).json({user})
-    // }
+        res.status(200).json({user})
+    }
 
-    // demote_user_role = async(req, res) =>{
-    //     const email = req.body // email muốn thăng quyền
-    //     const current_email = req.user // nhận email đã được gán sau requireAuth
+    demote_user_role = async(req, res) =>{
+        const {email} = req.body // email muốn thăng quyền
+        const {current_email} = req.user // nhận email đã được gán sau requireAuth
 
-    //     if(current_email == email){
-    //         res.status(400).json({error: "can't demote your self"})
-    //     }
+        if(current_email == email){
+            res.status(400).json({error: "can't demote your self"})
+        }
 
-    //     const user = await User.findOneAndUpdate({email}, {role: 'user'})
+        const user = await User.findOneAndUpdate({email}, {role: 'user'})
 
-    //     if(!user){
-    //         res.status(400).json({error: "can't find user"})
-    //     }
+        if(!user){
+            res.status(400).json({error: "can't find user"})
+        }
 
-    //     res.status(200).json({user})
-    // }
+        res.status(200).json({user})
+    }
 
     change_password = async(req, res) =>{
-        const email = req.user // nhận email đã được gán sau requireAuth
-        const new_password = req.body // mật khẩu mới
+        const {email} = req.user // nhận email đã được gán sau requireAuth
+        const {new_password} = req.body // mật khẩu mới
 
         try{
-            const user = await User.change_password(email, new_password)
+            const user = await User.change_pass(email, new_password)
             console.log(user)
             res.status(200).json({email, user})
         }catch(error){

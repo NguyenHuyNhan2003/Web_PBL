@@ -79,7 +79,7 @@ def filter_post_data(post, group_name):
     (reaction_count, like_count, love_count, care_count, haha_count, wow_count, sad_count, angry_count) = reaction_counter(post)
     
     post_info = {
-        # "post_id": post["post_id"],
+        "post_id": post["post_id"],
         "text": post["text"],
         # "shares": post["shares"],
         # "like_count": like_count,
