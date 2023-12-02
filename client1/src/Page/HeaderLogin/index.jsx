@@ -2,8 +2,16 @@ import React from 'react'
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from '@nextui-org/react'
 import { AcmeLogo } from './AcmeLogo.jsx'
 import './index,css'
-
+import { useLogout } from '../../hook/useLogout'
+import { useAuthContext } from '../../hook/useAuthContext.jsx'
 export default function App() {
+  const {user} = useAuthContext();
+
+  const {logout} = useLogout();
+  function hanldleclick(){
+    console.log("Đã log out ");
+    logout();
+  }
   return (
     <Navbar isBordered>
       <NavbarBrand>
@@ -17,19 +25,37 @@ export default function App() {
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
-          <Link href='/AddPost' aria-current='page' className='navbar-link'>
-        
+          <Link href='/AddPost' aria-current='page' className='navbar-link'> 
           </Link>
         </NavbarItem>
       </NavbarContent>
+
+      
+    
+     
       <NavbarContent justify='end'>
-        <NavbarItem className='hidden lg:flex'>
-          <Link href='/Login' className='navbar-link'>Login</Link>
-        </NavbarItem>
-        <NavbarItem>
+        {
+          user &&(
         
+        <div>
+        <span>{user.email}</span>
+          <button onClick={hanldleclick}>LOG OUT </button>
+        </div>
+          )}
+
+        {
+        !user && (
+          <NavbarContent justify='end'>
+          <NavbarItem className='hidden lg:flex'>
+            <Link href='/Login' className='navbar-link'>Login</Link>
+            </NavbarItem>
+
+        <NavbarItem>
           <Link href='/SignUp' className='navbar-link'>Sign Up</Link>
         </NavbarItem>
+        </NavbarContent>
+        )}
+        
       </NavbarContent>
     </Navbar>
   )

@@ -1,7 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-
+import { useLogin } from '../../hook/useLogin'
 export default function LoginPage() {
+  const {login,error,isLoading} = useLogin();
+
+
   const navigate = useNavigate()
   const {
     register,
@@ -13,40 +16,9 @@ export default function LoginPage() {
   const onSubmit = async (data) => {
     console.log(data.email);
     console.log(data.password);
-
+    await login(data.email,data.password)
     reset()
-    try {
-      // Gửi dữ liệu lên server sử dụng fetch
-      const response = await fetch('URL', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password
-        })
-      })
-      if (response.ok) {
-        // Xử lý kết quả từ server (nếu cần)
-        const responseData = await response.json()
-        console.log(responseData)
-        // Sau khi xử lý, reset các ô input
-        reset()
-        // check role và chuyển hướng trang 
-
-        // useState để luu token
-        
-        // Chuyển hướng hoặc thực hiện các hành động khác
-        navigate('/');
-      } else {
-        // Xử lý lỗi nếu response không thành công
-        console.error('Error:', response.status, response.statusText)
-      }
-    } catch (error) {
-      // Xử lý lỗi nếu có
-      console.error('Error sending data to server:', error)
-    }
+  
   }
 
 
@@ -76,9 +48,11 @@ export default function LoginPage() {
                 <button
                   type='submit'
                   className='flex w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600 rounded'
-                >
+                  disabled ={isLoading}
+                  >
                   Đăng nhập
                 </button>
+                {error && <div className='error'>{error}</div>}
               </div>
               <div className='mt-8 flex items-center justify-center'>
                 <span className='text-gray-400'>Bạn chưa có tài khoản?</span>
@@ -86,6 +60,7 @@ export default function LoginPage() {
                   Đăng ký
                 </Link>
               </div>
+            
             </form>
           </div>
         </div>

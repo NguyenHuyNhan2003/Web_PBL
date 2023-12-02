@@ -1,7 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-
+import { useSignup } from '../../hook/useSignup'
 export default function LoginPage() {
+  const {signup,error,isLoading} = useSignup();
+
   const navigate = useNavigate()
   const {
     register,
@@ -10,46 +12,14 @@ export default function LoginPage() {
     formState: { errors }
   } = useForm()
 
+
   const onSubmit = async (data) => {
     console.log(data.email);
     console.log(data.password);
-
+    await signup(data.email,data.password);
     reset()
-    try {
-      // Gửi dữ liệu lên server sử dụng fetch
-      const response = await fetch('URL', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password
-        })
-      })
-      if (response.ok) {
-        // Xử lý kết quả từ server (nếu cần)
-        const responseData = await response.json()
-        console.log(responseData)
-        // Sau khi xử lý, reset các ô input
-        reset()
-        // check role và chuyển hướng trang 
-
-        // useState để luu token
-        
-        // Chuyển hướng hoặc thực hiện các hành động khác
-        navigate('/');
-      } else {
-        // Xử lý lỗi nếu response không thành công
-        console.error('Error:', response.status, response.statusText)
-      }
-    } catch (error) {
-      // Xử lý lỗi nếu có
-      console.error('Error sending data to server:', error)
-    }
+    
   }
-
-
 
   return (
     <div className='bg-gray-100 min-h-screen'>
@@ -79,6 +49,7 @@ export default function LoginPage() {
                 >
                  Đăng Kí
                 </button>
+                {error && <div className='error'> {error}</div>}
               </div>
             
             </form>
