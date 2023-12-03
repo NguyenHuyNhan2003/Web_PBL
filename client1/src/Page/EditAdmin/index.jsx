@@ -1,10 +1,13 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom'
+import { useAuthContext } from '../../hook/useAuthContext'
 export default function Edit() {
+  const { user } = useAuthContext()
+  const [error, setError] = useState(null)
   // lấy dữ liệu về
   const { _id } = useParams()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const api = `http://localhost:5000/post/edit/recruitment/${_id}`
   const [formData, setFormData] = useState({
     congti: '',
@@ -16,18 +19,28 @@ export default function Edit() {
     timedang: ''
   })
   useEffect(() => {
-    fetch(api)
-      .then((res) => {
-        return res.json()
+    if (user) {
+      fetch(api, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }
       })
-      .then((res) => {
-        console.log(res.data)
-        setFormData(res)
-      })
-      .catch((error) => {
-        console.log()
-      })
-  }, [])
+        .then((res) => {
+          return res.json()
+        })
+        .then((res) => {
+          console.log(res.data)
+          setFormData(res)
+        })
+        .catch((error) => {
+          console.log()
+        })
+    } else {
+      setError('You must be logged in')
+      return
+    }
+  }, [user])
   console.log(formData)
   console.log(_id)
 
@@ -40,26 +53,39 @@ export default function Edit() {
   }
   const handleSubmit = (event) => {
     event.preventDefault()
+    if (!user) {
+      setError('You must be logged in')
+      return
+    }
     // Xử lý dữ liệu biểu mẫu, ví dụ: gửi dữ liệu đến máy chủ hoặc thực hiện các thao tác khác
     console.log('Submitted data:', formData)
     axios
-      .post('http://localhost:5000/post/create', formData)
+      .post('http://localhost:5000/post/create', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
       .then((response) => {
         console.log('Response:', response.data)
       })
       .catch((error) => {
         console.error('Error:', error)
       })
-      axios
-      .put(`http://localhost:5000/post/update/recruitment/${_id}`, formData)
+    axios
+      .put(`http://localhost:5000/post/update/recruitment/${_id}`, formData,{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
       .then((response) => {
-        alert('Thành Công');
-        navigate('/');
+        alert('Thành Công')
+        navigate('/Postadmin')
       })
       .catch((err) => {
-        console.log(err);
-      });
-    
+        console.log(err)
+      })
   }
   // update/recuitment/:_id
   return (
@@ -154,6 +180,7 @@ export default function Edit() {
       <button style={{ backgroundColor: 'green' }} type='submit'>
         Cập Nhật Tuyển Dụng
       </button>
+      {error && <div className='error'>{error}</div>}
     </form>
   )
 }

@@ -8,10 +8,10 @@ export default function App() {
   const {user} = useAuthContext();
 
   const {logout} = useLogout();
-  function hanldleclick(){
-    console.log("Đã log out ");
-    logout();
-  }
+  // function hanldleclick(){
+  //   console.log("Đã log out ");
+  //   logout();
+  // }
   return (
     <Navbar isBordered>
       <NavbarBrand>
@@ -21,7 +21,6 @@ export default function App() {
       <NavbarContent className='hidden sm:flex gap-4' justify='center'>
         <NavbarItem>
           <Link color='foreground' href='/Postadmin' className='navbar-link'>
-        
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
@@ -34,17 +33,8 @@ export default function App() {
     
      
       <NavbarContent justify='end'>
-        {
-          user &&(
-        
-        <div>
-        <span>{user.email}</span>
-          <button onClick={hanldleclick}>LOG OUT </button>
-        </div>
-          )}
-
-        {
-        !user && (
+    
+     
           <NavbarContent justify='end'>
           <NavbarItem className='hidden lg:flex'>
             <Link href='/Login' className='navbar-link'>Login</Link>
@@ -54,7 +44,7 @@ export default function App() {
           <Link href='/SignUp' className='navbar-link'>Sign Up</Link>
         </NavbarItem>
         </NavbarContent>
-        )}
+      
         
       </NavbarContent>
     </Navbar>

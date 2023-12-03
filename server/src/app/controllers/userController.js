@@ -16,8 +16,9 @@ class userController{
             const user = await User.login(email, password)
             // create token
             const token = this.createToken(user._id)
+            const role = user.role
             console.log(user)
-            res.status(200).json({email, token})
+            res.status(200).json({email, token,role})
         } catch (error){
             console.log(error.message)
             res.status(400).json({error: error.message})
@@ -31,11 +32,11 @@ class userController{
         // const password = "123qweQWE!@#"
         // const role = "admin"
 
-        const role = "user"
+        const role = "admin"
         try{
             const user = await User.addUser(email, password, role)
             const token = this.createToken(user._id)
-
+            
             console.log(user)
             res.status(200).json({email, token})
         } catch (error){

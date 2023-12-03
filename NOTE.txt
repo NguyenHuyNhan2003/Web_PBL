@@ -47,3 +47,5 @@ thêm trong server
 
 *************************** END OF UPDATE ***************************
 
++ Frontend : 
+- sẽ bỏ trang Analisic 

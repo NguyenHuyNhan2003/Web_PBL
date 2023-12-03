@@ -2,13 +2,25 @@ import React from 'react'
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from '@nextui-org/react'
 import { AcmeLogo } from './AcmeLogo.jsx'
 import './index,css'
+import { useLogout } from '../../hook/useLogout'
+import { useAuthContext } from '../../hook/useAuthContext.jsx'
 
+import { useNavigate } from 'react-router-dom'
 export default function App() {
+  const navigation = useNavigate();
+  const { user } = useAuthContext()
+
+  const { logout } = useLogout()
+  function hanldleclick() {
+    console.log('Đã log out ')
+    logout()
+    navigation('/Login'); 
+  }
   return (
     <Navbar isBordered>
       <NavbarBrand>
         <AcmeLogo />
-        <p className='font-bold text-inherit'>ACME</p>
+        <p className='font-bold text-inherit'>Việc Làm 24h</p>
       </NavbarBrand>
       <NavbarContent className='hidden sm:flex gap-4' justify='center'>
         <NavbarItem>
@@ -23,12 +35,32 @@ export default function App() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify='end'>
-        <NavbarItem className='hidden lg:flex'>
-          <Link href='/Login' className='navbar-link'>Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-         
-        </NavbarItem>
+        {user && user.role == 'admin' && (
+          <div>
+            <span>{user.email}</span>
+            <button onClick={hanldleclick}>LOG OUT </button>
+          </div>
+        )}
+
+        {!user && (
+          <NavbarContent justify='end'>
+            <NavbarItem className='hidden lg:flex'>
+              <Link href='/Login' className='navbar-link'>
+                Login
+              </Link>
+            </NavbarItem>
+          </NavbarContent>
+        )}
+
+        {user && user.role !== 'admin' && (
+          <NavbarContent justify='end'>
+            <NavbarItem className='hidden lg:flex'>
+              <Link href='/Login' className='navbar-link'>
+                Login
+              </Link>
+            </NavbarItem>
+          </NavbarContent>
+        )}
       </NavbarContent>
     </Navbar>
   )

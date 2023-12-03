@@ -5,6 +5,8 @@ import Recruitment from '../Page/Recruitment/index.jsx'
 import Analisic from '../Page/AnaLitic/index.jsx'
 import Detail from '../Page/Detail_Recruitment/detail'
 import './index.css'
+import { useLogout } from '../hook/useLogout.jsx'
+import { useAuthContext } from '../hook/useAuthContext.jsx'
 import {
   Navbar,
   NavbarBrand,
@@ -21,46 +23,34 @@ import {
 import { AcmeLogo } from './AcmeLogo.jsx'
 import Login from '../Login/index.jsx'
 import { Admin } from '../Page/Admin/admin.jsx'
-
+import { useNavigate } from 'react-router-dom'
 export default function Header() {
   const [activeItem, setActiveItem] = useState('Features')
-  const [isLoggedIn, setLoggedIn] = useState(false)
-  const [isLoggedout, setLoggedout] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const openModal = () => {
-    setIsModalOpen(true)
-  }
-
-  const closeModal = () => {
-    setIsModalOpen(false)
-  }
-
-  const user = {
-    name: 'Jason Hughes',
-    email: 'zoey@example.com',
-    avatarSrc: 'https://i.pravatar.cc/150?u=a042581f4e29026704d'
-  }
+  // const user = {
+  //   name: 'Jason Hughes',
+  //   email: 'zoey@example.com',
+  //   avatarSrc: 'https://i.pravatar.cc/150?u=a042581f4e29026704d'
+  // }
 
   const handleItemClick = (itemName) => {
     setActiveItem(itemName)
   }
 
-  const handleLogout = () => {
-    setLoggedout(false)
-    setIsModalOpen(false)
+  const { user } = useAuthContext()
+// console.log(user.role);
+  const { logout } = useLogout()
+  const navigation = useNavigate();
+  function hanldleclick() {
+    console.log('Đã log out ')
+    logout()
+    navigation('/Login'); 
   }
-
-  const handleSubmit = () => {
-    setLoggedout(true)
-    console.log('Successfully logged in!')
-  }
-
   return (
     <Navbar style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
       <NavbarBrand>
         <AcmeLogo />
-        <p className='font-bold text-inherit'>Ngô Đình Phước</p>
+        <p className='font-bold text-inherit'>Việc Làm 24h</p>
       </NavbarBrand>
 
       <NavbarContent className='hidden sm:flex gap-4' justify='center'>
@@ -70,19 +60,11 @@ export default function Header() {
             className={`text-${activeItem === 'Features' ? 'active' : 'foreground'}`}
             onClick={() => handleItemClick('Features')}
           >
-            Home
+            Trang Chủ
           </RouterLink>
         </NavbarItem>
 
-        <NavbarItem>
-          <RouterLink
-            to='/Analytics'
-            className={`text-${activeItem === 'Customers' ? 'active' : 'foreground'}`}
-            onClick={() => handleItemClick('Customers')}
-          >
-            Analytics
-          </RouterLink>
-        </NavbarItem>
+   
 
         <NavbarItem>
           <RouterLink
@@ -90,56 +72,47 @@ export default function Header() {
             className={`text-${activeItem === 'Integrations' ? 'active' : 'foreground'}`}
             onClick={() => handleItemClick('Integrations')}
           >
-            Recruitment
+            Tuyển Dụng
           </RouterLink>
         </NavbarItem>
 
-        <NavbarItem>
-          <RouterLink
-            to='/Admin'
-            className={`text-${activeItem === 'Admin' ? 'active' : 'foreground'}`}
-            onClick={() => handleItemClick('Integrations')}
-          >
-            Admin
-          </RouterLink>
-        </NavbarItem>
+        
       </NavbarContent>
 
-      <NavbarContent as='div' justify='end'>
-        {isLoggedout ? (
-          <Dropdown placement='bottom-end'>
-            <DropdownTrigger>
-              <div className='flex items-center'>
-                <Avatar
-                  isBordered
-                  as='button'
-                  className='transition-transform'
-                  color='secondary'
-                  name={user.name}
-                  size='sm'
-                  src={user.avatarSrc}
-                />
-                <p className='ml-2 font-semibold text-inherit'>{user.name}</p>
-              </div>
-            </DropdownTrigger>
-            <DropdownMenu aria-label='Profile Actions' variant='flat'>
-              <DropdownItem key='profile' className='h-14 gap-2'>
-                <p className='font-semibold'>Signed in as</p>
-                <p className='font-semibold'>{user.email}</p>
-              </DropdownItem>
-              <DropdownItem key='logout' color='danger' onClick={handleLogout}>
-                Log Out
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        ) : (
-          <>
-            <Login handleSubmit={handleSubmit} />
-            <Button variant='outlined' color='accent' onClick={openModal}>
-              Sign Up
-            </Button>
-     
-          </>
+      <NavbarContent justify='end'>
+        {user && user.role =='user' &&(
+          <div>
+            <span>{user.email}</span>
+            <button onClick={hanldleclick}>LOG OUT </button>
+          </div>
+        )}
+        {!user && (
+          <NavbarContent justify='end'>
+            <NavbarItem className='hidden lg:flex'>
+              <Link href='/Login' className='navbar-link'>
+                Login
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link href='/SignUp' className='navbar-link'>
+                Sign Up
+              </Link>
+            </NavbarItem>
+          </NavbarContent>
+        )}
+        {user && user.role =='admin' && (
+          <NavbarContent justify='end'>
+            <NavbarItem className='hidden lg:flex'>
+              <Link href='/Login' className='navbar-link'>
+                Login
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link href='/SignUp' className='navbar-link'>
+                Sign Up
+              </Link>
+            </NavbarItem>
+          </NavbarContent>
         )}
       </NavbarContent>
     </Navbar>
@@ -169,3 +142,15 @@ export default function Header() {
 //     </div>
 //   </div>
 // )}
+
+
+
+// <NavbarItem>
+// <RouterLink
+//   to='/Analytics'
+//   className={`text-${activeItem === 'Customers' ? 'active' : 'foreground'}`}
+//   onClick={() => handleItemClick('Customers')}
+// >
+//   Analytics
+// </RouterLink>
+// </NavbarItem>
