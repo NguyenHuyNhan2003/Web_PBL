@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "options": {
-    "allowedHosts": ["localhost", ".localhost"],
+    "allowedHosts": [
+      "localhost",
+      ".localhost"
+    ],
     "proxy": "https://localhost:5000/"
   },
- 
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@heroicons/react": "^2.0.18",

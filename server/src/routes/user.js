@@ -17,7 +17,7 @@ router.post('/updaterole', userController.update_user_role)
 // demote user role route
 router.post('/demoteuser', userController.demote_user_role)
 
-router.use(requireAuth.AuthAdmin) // cho những phần cần admin đăng nhập
-router.use(requireAuth.AuthUser) // cho những phần cần user đăng nhập
+// router.use(requireAuth.AuthAdmin) // cho những phần cần admin đăng nhập
+// router.use(requireAuth.AuthUser) // cho những phần cần user đăng nhập
 
 module.exports = router

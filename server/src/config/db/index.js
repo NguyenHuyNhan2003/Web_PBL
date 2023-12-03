@@ -3,7 +3,7 @@ require('dotenv').config()
 
 async function connect() {
     try {
-        await mongoose.connect(process.env.mongoURI, {
+        await mongoose.connect('mongodb://localhost:27017/dulieu', {
         useNewUrlParser: true, 
         useUnifiedTopology: true,
         family: 4,

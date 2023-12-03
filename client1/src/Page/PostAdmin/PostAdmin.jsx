@@ -3,6 +3,7 @@ import { Button } from '@nextui-org/react'
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination } from '@nextui-org/react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../../hook/useAuthContext'
 
 const cellStyle = {
   overflow: 'hidden',
@@ -20,21 +21,28 @@ const imageCellStyle = {
 }
 
 export default function PostAdmin() {
+  const { user } = useAuthContext()
   const navigate = useNavigate()
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
   const rowsPerPage = 2
   const api = 'http://localhost:5000/Post/recruitment'
+  const [error,setError] = useState(null);
   useEffect(() => {
-    fetch(api)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data)
+    if(user){
+      fetch(api,{
+     
+          'Authorization': `Bearer ${user.token}`
       })
-      .catch((error) => {
-        console.error('Error fetching data:', error)
-      })
-  }, [])
+        .then((response) => response.json())
+        .then((data) => {
+          setData(data)
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error)
+        })
+    }
+  }, [user])
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage
@@ -47,9 +55,18 @@ export default function PostAdmin() {
   }
 
   const handleDelete = (postId) => {
+    if (!user) {
+      setError('You must be logged in')
+      return
+    }
     console.log(`Delete button clicked for post with id: ${postId}`)
     axios
-      .delete(`http://localhost:5000/post/delete/${postId}`)
+      .delete(`http://localhost:5000/post/delete/${postId}`,{
+        headers: {
+        
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
       .then((res) => {
         console.log('Thành công xóa');
         window.location.reload();

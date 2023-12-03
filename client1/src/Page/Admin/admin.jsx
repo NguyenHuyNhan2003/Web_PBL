@@ -1,6 +1,5 @@
 import './admin.css'
 import React, { useEffect, useState } from 'react'
-
 import './JobPostingForm.css'
 import axios from 'axios'
 import {
@@ -13,34 +12,35 @@ import {
   Pagination,
   getKeyValue
 } from '@nextui-org/react'
+import { useAuthContext } from '../../hook/useAuthContext'
 export default function Admin() {
-  useEffect(() => {
-    fetch(api)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data)
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error)
-      })
-  }, [])
+  const { user } = useAuthContext()
 
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
+  const [error, setError] = useState(null)
   const rowsPerPage = 2
 
   const api = ' http://localhost:5000/Post/'
-
   useEffect(() => {
-    fetch(api)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data)
+    if (user) {
+      console.log(user.token)
+      fetch(api, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
       })
-      .catch((error) => {
-        console.error('Error fetching data:', error)
-      })
-  }, [])
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Thành công ')
+          console.log(data)
+          setData(data)
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error)
+        })
+    }
+  }, [user])
 
   const pages = Math.ceil(data.length / rowsPerPage)
 
@@ -119,6 +119,8 @@ export default function Admin() {
 // Import file CSS nếu cần
 
 function JobPostingForm() {
+  const [error, setError] = useState(null)
+  const { user } = useAuthContext()
   const [formData, setFormData] = useState({
     congti: '',
     luong: '',
@@ -127,12 +129,16 @@ function JobPostingForm() {
     level: 'entry',
     anh: '',
     timedang: '',
-    language:'',
+    language: '',
     id: ''
   })
 
   const handleChange = (event) => {
     const { name, value } = event.target
+    if (!user) {
+      setError('You must be logged in')
+      return
+    }
     setFormData({
       ...formData,
       [name]: value
@@ -140,19 +146,28 @@ function JobPostingForm() {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
+    if (!user) {
+      setError('You must be logged in')
+      return
+    }
     // Xử lý dữ liệu biểu mẫu, ví dụ: gửi dữ liệu đến máy chủ hoặc thực hiện các thao tác khác
-    console.log('Submitted data:', formData);
-    
+    console.log('Submitted data:', formData)
+
     axios
-      .post('http://localhost:5000/post/create', formData)
+      .post('http://localhost:5000/post/create', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
       .then((response) => {
         // Kiểm tra xem phản hồi có thành công không (status code 2xx)
         if (response.status >= 200 && response.status < 300) {
-          console.log('Recruitment saved:', response.data);
+          console.log('Recruitment saved:', response.data)
           // Trả về phản hồi cho client
-          alert('Thành công thêm');
-          
+          setError('Thêm Thành Công')
+
           // Đặt lại giá trị mặc định cho các trường sau khi submit
           setFormData({
             congti: '',
@@ -164,19 +179,19 @@ function JobPostingForm() {
             timedang: '',
             language: '',
             id: ''
-          });
+          })
         } else {
           // Xử lý trường hợp không thành công
-          console.error('Error:', response.status, response.statusText);
-          alert('Không thể thêm bài đăng');
+          console.error('Error:', response.status, response.statusText)
+          alert('Không thể thêm bài đăng')
         }
       })
       .catch((error) => {
         // Xử lý lỗi trong quá trình gửi request
-        console.error('Error:', error);
-        alert('Đã có lỗi xảy ra');
-      });
-  };
+        console.error('Error:', error)
+        alert('Đã có lỗi xảy ra')
+      })
+  }
 
   return (
     <form className='vertical-form' onSubmit={handleSubmit}>
@@ -291,10 +306,10 @@ function JobPostingForm() {
         />
       </div>
 
-      <button style={{ background: 'yellow' }} type='submit'>Đăng Tuyển Dụng</button>
-
+      <button style={{ background: 'yellow' }} type='submit'>
+        Đăng Tuyển Dụng
+      </button>
+      {error && <div className='error'>{error}</div>}
     </form>
   )
 }
-
-

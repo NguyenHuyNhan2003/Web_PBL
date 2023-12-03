@@ -67,7 +67,7 @@ export default function Recruitment() {
         <div className='heading_search'>
           <h2 className='heading_searchText'>
             {' '}
-            Search your <span className='heading_language'>{currentLanguage}</span>
+            Tìm kiếm <span className='heading_language'>{currentLanguage}</span>
           </h2>
         </div>
         <form>
@@ -76,7 +76,7 @@ export default function Recruitment() {
               <input
                 typy='text'
                 className='search_skill'
-                placeholder='Search by Skill, Position, Company... '    
+                placeholder='Tìm kiếm ngôn ngữ,công ti... '    
                 onChange={(event) => handleOnchange(event)}
                 value={searchInput}
               ></input>
