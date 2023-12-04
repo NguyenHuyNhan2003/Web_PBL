@@ -32,7 +32,7 @@ class userController{
         // const password = "123qweQWE!@#"
         // const role = "admin"
 
-        const role = "admin"
+        const role = "user"
         try{
             const user = await User.addUser(email, password, role)
             const token = this.createToken(user._id)
