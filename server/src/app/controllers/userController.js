@@ -1,6 +1,7 @@
 const express = require('express')
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer')
 require('dotenv').config()
 
 class userController{
