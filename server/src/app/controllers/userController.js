@@ -38,7 +38,27 @@ class userController{
             const token = this.createToken(user._id)
             
             console.log(user)
-            res.status(200).json({email, token})
+            //send mail
+            const config = {
+                service: 'gmail',
+                auth: {
+                    user: process.env.EMAIL,
+                    pass: process.env.MAIL_PASS
+                }
+            }
+
+            const transporter = nodemailer.createTransport(config)
+
+            const mail = {
+                from: process.env.EMAIL,
+                to: email,
+                subject: 'ĐĂNG KÝ THÀNH CÔNG',
+                text: 'Bạn đã tạo thành công tài khoản với mật khẩu: ' + password,
+            }
+        
+            transporter.sendMail(mail)
+
+            res.status(200).json({email, token, role})
         } catch (error){
             console.log(error.message)
             res.status(400).json({error: error.message})
