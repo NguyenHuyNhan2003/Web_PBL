@@ -38,6 +38,7 @@ export default function PostAdmin() {
         .then((data) => {
           setData(data)
         })
+        
         .catch((error) => {
           console.error('Error fetching data:', error)
         })
@@ -60,8 +61,7 @@ export default function PostAdmin() {
       return
     }
     console.log(`Delete button clicked for post with id: ${postId}`)
-    axios
-      .delete(`http://localhost:5000/post/delete/${postId}`,{
+    axios.delete(`http://localhost:5000/post/delete/${postId}`,{
         headers: {
         
           'Authorization': `Bearer ${user.token}`
@@ -105,31 +105,31 @@ export default function PostAdmin() {
           }}
         >
           <TableHeader>
-            <TableColumn key='congti' style={{ width: '12.5%' }}>
+            <TableColumn key='congti' style={{ width: '12.5%', textAlign: 'center' }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Công Ti</span>
             </TableColumn>
 
-            <TableColumn key='luong' style={{ width: '12.5%' }}>
+            <TableColumn key='luong' style={{ width: '10%', textAlign: 'center' }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Lương</span>
             </TableColumn>
 
-            <TableColumn key='vitri' style={{ width: '12.5%', ...imageCellStyle }}>
+            <TableColumn key='vitri' style={{ width: '12.5%',textAlign: 'center',...imageCellStyle }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Vị Trí</span>
             </TableColumn>
 
-            <TableColumn key='khuvuc' style={{ width: '12.5%' }}>
+            <TableColumn key='khuvuc' style={{ width: '12.5%',textAlign: 'center'  }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Khu Vực</span>
             </TableColumn>
 
-            <TableColumn key='level' style={{ width: '12.5%' }}>
+            <TableColumn key='level' style={{ width: '12.5%' ,textAlign: 'center' }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Level</span>
             </TableColumn>
 
-            <TableColumn key='timedang' style={{ width: '12.5%' }}>
+            <TableColumn key='timedang' style={{ width: '12.5%',textAlign: 'center'  }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Thời gian đăng</span>
             </TableColumn>
 
-            <TableColumn key='actions' style={{ width: '12.5%' }}>
+            <TableColumn key='actions' style={{ width: '12.5%',textAlign: 'center'  }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Hành động</span>
             </TableColumn>
           </TableHeader>

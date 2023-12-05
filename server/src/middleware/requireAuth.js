@@ -40,11 +40,9 @@ class requireAuth{
                 req.user = info.email //gán email cho request qua req.user để có thể sử dụng trong các router dưới
                 next()
             }else{
-                res.status(401).json({error: null})
+                res.status(401).json({error : null})
             }
 
-            
-    
         }catch(error){
             console.log(error)
             res.status(401).json({error: "Request not authorized"})

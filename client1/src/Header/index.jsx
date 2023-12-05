@@ -50,7 +50,7 @@ export default function Header() {
     <Navbar style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
       <NavbarBrand>
         <AcmeLogo />
-        <p className='font-bold text-inherit'>Việc Làm 24h</p>
+        <p className='font-bold text-inherit'>Việc Làm IT 24h</p>
       </NavbarBrand>
 
       <NavbarContent className='hidden sm:flex gap-4' justify='center'>
@@ -73,6 +73,27 @@ export default function Header() {
             onClick={() => handleItemClick('Integrations')}
           >
             Tuyển Dụng
+          </RouterLink>
+        </NavbarItem>
+
+
+        <NavbarItem>
+          <RouterLink
+            to='/Recruitment'
+            className={`text-${activeItem === 'Congti' ? 'active' : 'foreground'}`}
+            onClick={() => handleItemClick('Congti')}
+          >
+            Công Ti
+          </RouterLink>
+        </NavbarItem>
+
+        <NavbarItem>
+          <RouterLink
+            to='/Recruitment'
+            className={`text-${activeItem === 'CV' ? 'active' : 'foreground'}`}
+            onClick={() => handleItemClick('CV')}
+          >
+            CV
           </RouterLink>
         </NavbarItem>
 

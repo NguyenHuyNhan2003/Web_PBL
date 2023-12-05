@@ -33,17 +33,23 @@ export default function Admin() {
         .then((response) => response.json())
         .then((data) => {
           console.log('Thành công ')
-          console.log(data)
-          setData(data)
+          // if(data.error == null){
+          // console.log(data.error)
+          // setData([])
+          
+          // }else{
+          //   setData(data)
+          // }
+          setData(data);
         })
         .catch((error) => {
           console.error('Error fetching data:', error)
         })
     }
   }, [user])
+  console.log(data);
 
   const pages = Math.ceil(data.length / rowsPerPage)
-
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage
     const end = start + rowsPerPage
@@ -56,7 +62,7 @@ export default function Admin() {
     <div className='admin-container'>
       <div className='admin'>
         <div className='left-column'>
-          <h className='heading-admin'>Danh Sách Bài Post</h>
+          <h1 className='heading-admin' style={{marginLeft:'60px', bottom: '20px'}}>Danh Sách Bài Post</h1>
 
           <div>
             <Table
@@ -82,20 +88,22 @@ export default function Admin() {
                 width: '100%' // Ensure the table takes the full width of its container
               }}
             >
+            
+           
               <TableHeader>
-                <TableColumn key='id' style={{ width: '10%' }}>
+                <TableColumn key='id'style={{ width: '5%', textAlign: 'center' }}>
                   Idpost
                 </TableColumn>
 
-                <TableColumn key='text' style={{ width: '25%' }}>
+                <TableColumn key='text' style={{ width: '15%', textAlign: 'center' }}>
                   Text
                 </TableColumn>
 
-                <TableColumn key='time' style={{ width: '10%' }}>
+                <TableColumn key='time' style={{ width: '5%', textAlign: 'center' }}>
                   Time
                 </TableColumn>
 
-                <TableColumn key='actions' style={{ width: '5%' }}>
+                <TableColumn key='actions' style={{ width: '5%', textAlign: 'center' }}>
                   Actions
                 </TableColumn>
               </TableHeader>
@@ -110,6 +118,10 @@ export default function Admin() {
         </div>
 
         <div className='right-column'>
+        <div style={{ display:'flex', justifyContent:"center"}}>
+        
+        <h2>Thêm Tuyển Dụng</h2>
+        </div>
           <JobPostingForm />
         </div>
       </div>

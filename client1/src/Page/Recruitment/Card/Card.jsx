@@ -16,7 +16,7 @@ import {
   Pagination,
   getKeyValue
 } from '@nextui-org/react'
-import anh from '../../../css/img/logo.png'
+import anhh from '../../../css/img/logo.png'
 import { Link } from 'react-router-dom'
 const MusicCard = ({ liked, onToggleLike, data }) => (
   <Card
@@ -27,7 +27,7 @@ const MusicCard = ({ liked, onToggleLike, data }) => (
     <CardBody>
       <div className='grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center'>
         <div className='relative col-span-6 md:col-span-4 mb-4'>
-          <Image alt='Album cover' className='object-cover' height={300} shadow='md' src={anh} width='100%' />
+          <Image alt='Album cover' className='object-cover' height={300} shadow='md' src={data.anh} width='100%' />
         </div>
 
         <div className='flex flex-col col-span-6 md:col-span-8'>
