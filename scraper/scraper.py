@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from datetime import datetime, timedelta
+from pymongo import MongoClient 
 import pandas as pd
 import time
 import random
@@ -16,7 +17,30 @@ from time import sleep
 userName = '' # email or phone number
 passWord = '' # password
 pageNumber = 10
+mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority'
+DATABASE_NAME = "PBL4"
 today = datetime.now().strftime("%Y-%m-%d")
+
+def save_excel_to_mongoDB(path):
+    try:
+        # connect to mongodb
+        client = MongoClient(mongoURI)
+        db = client[DATABASE_NAME]
+        collection = db['posts']
+        if client.server_info():
+            print("Connected to MongoDB!")
+        # read excel file
+        df = pd.read_excel(path)
+        data = df.to_dict('records')
+        # insert data to mongodb
+        collection.delete_many({}) #delete old posts
+        collection.insert_many(data)
+        print("Inserted ", len(data), " posts to MongoDB!")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        client.close()
+        print("Connection closed!")
 
 def save_to_excel(post_list, filename, folderPath):
     path = folderPath + filename
@@ -35,6 +59,7 @@ def save_to_excel(post_list, filename, folderPath):
 
     post_df_full.to_excel(path, index=False)    
     print("Saved ", len(post_list))
+    save_excel_to_mongoDB(path)
 
 def writeFileTxt(fileName, content):
     with open(fileName, 'a') as f1:
@@ -261,14 +286,14 @@ if __name__ == "__main__":
     group = 'jobITDaNang' # input('Enter group name (e.g: vieclamCNTTDaNang): ')
     value = 1# input('Enter 1 to start crawling, enter any other keys to exit: ')
     
-    filename = group + "_" + today + "_posts.csv"
+    filename = group + "_" + today + "_posts.xlsx"
     folderPath = "./result/"
     if (int(value) == 1):
         # getPostsID(driver, group, 100)
         idList = get_ID_List(driver, group)
         postList = crawlPostData(driver, idList, group)
         if(postList != False):
-            save_to_excel(postList, group + "_" + today + "_posts.xlsx", "./result/")
+            save_to_excel(postList, filename, folderPath)
             driver.close()
             print('Done!')
         else:
