@@ -283,8 +283,8 @@ if __name__ == "__main__":
     if(isLogin == False):
         loginFB(driver, userName, passWord)
     
-    group = 'jobITDaNang' # input('Enter group name (e.g: vieclamCNTTDaNang): ')
-    value = 1# input('Enter 1 to start crawling, enter any other keys to exit: ')
+    group = input('Enter group name (e.g: vieclamCNTTDaNang): ')
+    value = input('Enter 1 to start crawling, enter any other keys to exit: ')
     
     filename = group + "_" + today + "_posts.xlsx"
     folderPath = "./result/"
