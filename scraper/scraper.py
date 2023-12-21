@@ -204,13 +204,6 @@ def clonePostContent(driver, postId, groupname):
         postData = {"post_id": postId, "post_text" : "", "post_date": "", "post_url": "https://www.facebook.com/groups/" + groupname + "/posts/" + str(postId)}
 
         driver.get("https://mbasic.facebook.com/groups/" + groupname + "/posts/" + str(postId))
-        
-        posted_time = driver.find_element(By.TAG_NAME, 'abbr').text
-        print(posted_time)
-        if(len(posted_time)):
-            postDate = convert_time(posted_time)
-            print(postDate)
-            postData["post_date"] = postDate
 
         contentElement = driver.find_elements(By.XPATH,"//div[@data-gt='{\"tn\":\"*s\"}']")
         if (len(contentElement) == 0):
@@ -222,6 +215,13 @@ def clonePostContent(driver, postId, groupname):
         else:
             print("No text")
             return False
+        
+        posted_time = driver.find_element(By.TAG_NAME, 'abbr').text
+        print(posted_time)
+        if(len(posted_time)):
+            postDate = convert_time(posted_time)
+            print(postDate)
+            postData["post_date"] = postDate
 
         return postData
     except:
