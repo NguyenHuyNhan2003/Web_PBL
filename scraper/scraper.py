@@ -16,8 +16,8 @@ from time import sleep
 
 userName = '' # email or phone number
 passWord = '' # password
-pageNumber = 10
-mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority'
+pageNumber = 50
+mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority' 
 DATABASE_NAME = "PBL4"
 today = datetime.now().strftime("%Y-%m-%d")
 
@@ -217,12 +217,13 @@ def clonePostContent(driver, postId, groupname):
             return False
         
         posted_time = driver.find_element(By.TAG_NAME, 'abbr').text
-        print(posted_time)
+        # print(posted_time)
         if(len(posted_time)):
             postDate = convert_time(posted_time)
-            print(postDate)
+            print(posted_time + ' -> ' +postDate)
             postData["post_date"] = postDate
 
+        
         return postData
     except:
         print("Fail clone Post")
