@@ -201,7 +201,7 @@ def getPostsID(driver, idGroup, numberId):
 
 def clonePostContent(driver, postId, groupname):
     try:
-        postData = {"post_id": postId, "post_text" : "", "post_date": "", "post_url": "https://www.facebook.com/groups/" + groupname + "/posts/" + str(postId)}
+        postData = {"id": postId, "text" : "", "time": "", "post_url": "https://www.facebook.com/groups/" + groupname + "/posts/" + str(postId)}
 
         driver.get("https://mbasic.facebook.com/groups/" + groupname + "/posts/" + str(postId))
 
@@ -211,7 +211,7 @@ def clonePostContent(driver, postId, groupname):
             
         if (len(contentElement)):
             content = contentElement[0].text
-            postData["post_text"] = content
+            postData["text"] = content
         else:
             print("No text")
             return False
@@ -221,7 +221,7 @@ def clonePostContent(driver, postId, groupname):
         if(len(posted_time)):
             postDate = convert_time(posted_time)
             print(posted_time + ' -> ' +postDate)
-            postData["post_date"] = postDate
+            postData["time"] = postDate
 
         
         return postData
