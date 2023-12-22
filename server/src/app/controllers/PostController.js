@@ -230,6 +230,6 @@ const { congti, luong, vitri, khuvuc, level, timedang, language, id, soluong, ki
         res.status(400).json({ error: error.message });
       });
   };
-
+}
 
 module.exports = new PostController();
