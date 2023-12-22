@@ -14,10 +14,10 @@ import random
 import requests
 from time import sleep
 
-userName = '' # email or phone number
-passWord = '' # password
-pageNumber = 10
-mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority'
+userName = '0944143615' # email or phone number
+passWord = 'Nathan2511FBA' # password
+pageNumber = 50
+mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority' 
 DATABASE_NAME = "PBL4"
 today = datetime.now().strftime("%Y-%m-%d")
 
@@ -205,13 +205,6 @@ def clonePostContent(driver, postId, groupname):
 
         driver.get("https://mbasic.facebook.com/groups/" + groupname + "/posts/" + str(postId))
         
-        posted_time = driver.find_element(By.TAG_NAME, 'abbr').text
-        print(posted_time)
-        if(len(posted_time)):
-            postDate = convert_time(posted_time)
-            print(postDate)
-            postData["post_date"] = postDate
-
         contentElement = driver.find_elements(By.XPATH,"//div[@data-gt='{\"tn\":\"*s\"}']")
         if (len(contentElement) == 0):
             contentElement = driver.find_elements(By.XPATH,"//div[@data-ft='{\"tn\":\"*s\"}']")
@@ -222,7 +215,15 @@ def clonePostContent(driver, postId, groupname):
         else:
             print("No text")
             return False
+        
+        posted_time = driver.find_element(By.TAG_NAME, 'abbr').text
+        # print(posted_time)
+        if(len(posted_time)):
+            postDate = convert_time(posted_time)
+            print(posted_time + ' -> ' +postDate)
+            postData["post_date"] = postDate
 
+        
         return postData
     except:
         print("Fail clone Post")
@@ -249,7 +250,7 @@ def get_ID_List(driver, idGroup):
                         sumLinks.append(idPost)
                         idList.append(idPost)
                         writeFileTxt(fileIds, idPost)
-                        print(idPost)
+                        # print(idPost)
             page += 1
             nextBtn = driver.find_elements(By.XPATH,'//a[contains(@href, "?bacr")]')
             if (len(nextBtn)):
