@@ -6,6 +6,9 @@ import { NextIcon } from './NextIcon'
 import { PreviousIcon } from './PreviousIcon'
 import { RepeatOneIcon } from './RepeatOneIcon'
 import { ShuffleIcon } from './ShuffleIcon'
+import axios from 'axios'
+import PAgination from '../../../Pagination.js'
+
 import {
   Table,
   TableHeader,
@@ -27,20 +30,25 @@ const MusicCard = ({ liked, onToggleLike, data }) => (
     <CardBody>
       <div className='grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center'>
         <div className='relative col-span-6 md:col-span-4 mb-4'>
-          <Image alt='Album cover' className='object-cover' height={300} shadow='md' src={data.anh} width='100%' />
+          <Image alt='Album cover' className='object-cover' height={300} shadow='md' src={`http://localhost:5000/Images/`+data.anh} width='100%' />
         </div>
-
         <div className='flex flex-col col-span-6 md:col-span-8'>
           <div className='flex justify-between items-start'>
             <div className='flex flex-col gap-0'>
               <h3 className='font-semibold text-foreground/90'>
                 {' '}
-                <Link to={`/post/by/${data.id}`} style={{ fontSize: '20px' }}>
+                <a href={`/post/by/${data.id}`} style={{ fontSize: '20px' }}>
                   {data.vitri}
-                </Link>
+                </a>
               </h3>
               <p className='text-small text-foreground/80'>{data.congti}</p>
-              <h1 className='text-large font-medium mt-2'>{data.luong}</h1>
+              {data.luong === 'thuong luong' ? (
+                // Render a different content when data.luong is 'thuong luong'
+                <h1 className='text-large font-medium mt-2'>Thương lượng</h1>
+              ) : (
+                // Render the <h1> element with the numerical value if data.luong is a number
+                <h1 className='text-large font-medium mt-2'>{data.luong} </h1>
+              )}
               <h1 className='text-large font-medium mt-2'>{data.khuvuc} </h1>
               <span style={{ marginRight: '10px' }}>{data.level}</span>
               <ul>
@@ -76,7 +84,11 @@ const MusicCard = ({ liked, onToggleLike, data }) => (
     </CardBody>
   </Card>
 )
-const App = ({data,setData}) => {
+const App = ({ data, setData }) => {
+  const [image0, setImage] = useState()
+  const [currentPage, setCurrentPage] = useState(1)
+  const [PostsPerPage, setPostsPerPage] = useState(6)
+
   const [liked, setLiked] = useState([])
   const handleToggleLike = (index) => {
     setLiked((prevLiked) => {
@@ -85,23 +97,43 @@ const App = ({data,setData}) => {
       return newLiked
     })
   }
+
   useEffect(() => {
     fetch('http://localhost:5000/post/create')
       .then((response) => response.json())
       .then((res) => {
-        setData(res);
-        console.log(data);
+        setData(res)
+        console.log(data)
       })
       .catch((err) => {
         console.log(err)
       })
   }, [])
+
+
+  const lastPostIndex = currentPage * PostsPerPage
+  const firstPostIndex = lastPostIndex - PostsPerPage // 20 - 10
+  const currentPost = data.slice(firstPostIndex, lastPostIndex)
+
+  // console.log(currentPost);
   return (
-    <div className='flex flex-wrap justify-center'>
-      {data.map((element, index) => (
-        <MusicCard key={index} liked={liked[index]} onToggleLike={() => handleToggleLike(index)} data={element} />
-      ))}
+    <div>
+      <div className='flex flex-wrap justify-center'>
+        {currentPost.map((element, index) => (
+          <MusicCard key={index} liked={liked[index]} onToggleLike={() => handleToggleLike(index)} data={element} />
+        ))}
+      </div>
+      <PAgination
+        totalPost={data.length}
+        PostsPerPage={PostsPerPage}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
     </div>
   )
 }
 export default App
+// {data.map((element, index) => (
+//   <MusicCard key={index} liked={liked[index]} onToggleLike={() => handleToggleLike(index)} data={element} />
+// ))}
+// </div>

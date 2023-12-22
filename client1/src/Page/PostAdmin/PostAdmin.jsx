@@ -4,6 +4,15 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagina
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../hook/useAuthContext'
+import {
+  successNotification,
+  errorNotification,
+  warningNotification,
+  infoNotification,
+  customNotification
+} from '../../component/Toast'
+
+// Parse the string into a Date object
 
 const cellStyle = {
   overflow: 'hidden',
@@ -27,24 +36,23 @@ export default function PostAdmin() {
   const [data, setData] = useState([])
   const rowsPerPage = 2
   const api = 'http://localhost:5000/Post/recruitment'
-  const [error,setError] = useState(null);
+  const [error, setError] = useState(null)
   useEffect(() => {
-    if(user){
-      fetch(api,{
-     
-          'Authorization': `Bearer ${user.token}`
+    if (user) {
+      fetch(api, {
+        Authorization: `Bearer ${user.token}`
       })
         .then((response) => response.json())
         .then((data) => {
           setData(data)
         })
-        
+
         .catch((error) => {
           console.error('Error fetching data:', error)
         })
     }
   }, [user])
-
+  const pages = Math.ceil(data.length / rowsPerPage)
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage
     const end = start + rowsPerPage
@@ -61,18 +69,18 @@ export default function PostAdmin() {
       return
     }
     console.log(`Delete button clicked for post with id: ${postId}`)
-    axios.delete(`http://localhost:5000/post/delete/${postId}`,{
+    axios
+      .delete(`http://localhost:5000/post/delete/${postId}`, {
         headers: {
-        
-          'Authorization': `Bearer ${user.token}`
+          Authorization: `Bearer ${user.token}`
         }
       })
       .then((res) => {
-        console.log('Thành công xóa');
-        window.location.reload();
+        successNotification('Xóa thành công ')
+        window.location.reload()
       })
       .catch((error) => {
-        alert('Lỗi')
+        errorNotification('Xóa thất bại')
         console.log(error)
       })
   }
@@ -91,7 +99,7 @@ export default function PostAdmin() {
                 showShadow
                 color='secondary'
                 page={page}
-                total={data.length - 1}
+                total={pages}
                 onChange={(page) => setPage(page)}
               />
             </div>
@@ -113,23 +121,23 @@ export default function PostAdmin() {
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Lương</span>
             </TableColumn>
 
-            <TableColumn key='vitri' style={{ width: '12.5%',textAlign: 'center',...imageCellStyle }}>
+            <TableColumn key='vitri' style={{ width: '12.5%', textAlign: 'center', ...imageCellStyle }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Vị Trí</span>
             </TableColumn>
 
-            <TableColumn key='khuvuc' style={{ width: '12.5%',textAlign: 'center'  }}>
+            <TableColumn key='khuvuc' style={{ width: '12.5%', textAlign: 'center' }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Khu Vực</span>
             </TableColumn>
 
-            <TableColumn key='level' style={{ width: '12.5%' ,textAlign: 'center' }}>
+            <TableColumn key='level' style={{ width: '12.5%', textAlign: 'center' }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Level</span>
             </TableColumn>
 
-            <TableColumn key='timedang' style={{ width: '12.5%',textAlign: 'center'  }}>
+            <TableColumn key='timedang' style={{ width: '12.5%', textAlign: 'center' }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Thời gian đăng</span>
             </TableColumn>
 
-            <TableColumn key='actions' style={{ width: '12.5%',textAlign: 'center'  }}>
+            <TableColumn key='actions' style={{ width: '12.5%', textAlign: 'center' }}>
               <span style={{ fontWeight: 'bold', color: '#1890ff' }}>Hành động</span>
             </TableColumn>
           </TableHeader>
@@ -148,7 +156,11 @@ export default function PostAdmin() {
                         >
                           <a href={`/Edit/recruitment/${item._id}`}>Edit</a>
                         </Button>
-                        <Button className={{color:'yellow'}}  style={{ width: '80px' }} onClick={() => handleDelete(item._id)}>
+                        <Button
+                          className={{ color: 'yellow' }}
+                          style={{ width: '80px' }}
+                          onClick={() => handleDelete(item._id)}
+                        >
                           Delete
                         </Button>
                       </div>

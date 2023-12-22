@@ -6,6 +6,7 @@ app.use(bodyParser.json());
 const cors = require('cors'); // Import cors
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'))
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 const db = require('./config/db/index');

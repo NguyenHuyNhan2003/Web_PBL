@@ -12,6 +12,8 @@ import Default from './Layout/DefaultLayout/index.jsx'
 import AdminLayout from './Layout/AdminLayout/index.jsx'
 import { Fragment } from 'react'
 import Login from './Layout/LoginLayout/index.jsx'
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <BrowserRouter>
@@ -39,7 +41,9 @@ function App() {
           })}
         </Routes>
       </div>
+      <ToastContainer />
     </BrowserRouter>
+    
   )
 }
 export default App

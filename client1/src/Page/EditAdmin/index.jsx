@@ -2,6 +2,13 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAuthContext } from '../../hook/useAuthContext'
+import {
+  successNotification,
+  errorNotification,
+  warningNotification,
+  infoNotification,
+  customNotification
+} from '../../component/Toast'
 export default function Edit() {
   const { user } = useAuthContext()
   const [error, setError] = useState(null)
@@ -23,7 +30,7 @@ export default function Edit() {
       fetch(api, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          Authorization: `Bearer ${user.token}`
         }
       })
         .then((res) => {
@@ -63,7 +70,7 @@ export default function Edit() {
       .post('http://localhost:5000/post/create', formData, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          Authorization: `Bearer ${user.token}`
         }
       })
       .then((response) => {
@@ -73,20 +80,22 @@ export default function Edit() {
         console.error('Error:', error)
       })
     axios
-      .put(`http://localhost:5000/post/update/recruitment/${_id}`, formData,{
+      .put(`http://localhost:5000/post/update/recruitment/${_id}`, formData, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          Authorization: `Bearer ${user.token}`
         }
       })
       .then((response) => {
-        alert('Thành Công')
+        successNotification("Thành công cập nhật")
         navigate('/Postadmin')
       })
       .catch((err) => {
         console.log(err)
+        errorNotification("Cập nhật thất bại")
       })
   }
+ 
   // update/recuitment/:_id
   return (
     <form className='vertical-form' onSubmit={handleSubmit}>
@@ -168,10 +177,10 @@ export default function Edit() {
         <label htmlFor='postingTime'>Thời Gian Đăng:</label>
         <input
           className='input-admin'
-          type='datetime-local'
+          type='date' // Sử dụng type là "date" thay vì "datetime-local"
           id='postingTime'
           name='timedang'
-          value={formData.timedang}
+          value={(formData.timedang)}
           onChange={handleChange}
           required
         />
