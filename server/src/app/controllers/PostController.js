@@ -146,16 +146,6 @@ send_gmail = async(req, res) =>{
         res.status(400).json({error: error.message})
     });
 }
-
-scrape = async(req,res,next) => {
-    exec('py scraper.py', (error, stdout, stderr) => {
-        if (error) {
-            console.error(error.message);
-            return;
-        }
-        console.log("Function executed successfully: ", stdout);
-    });
-}
 }
 
 module.exports = new PostController;
