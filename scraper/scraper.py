@@ -14,8 +14,8 @@ import random
 import requests
 from time import sleep
 
-userName = '0944143615' # email or phone number
-passWord = 'Nathan2511FBA' # password
+userName = '' # email or phone number
+passWord = '' # password
 pageNumber = 50
 mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority' 
 DATABASE_NAME = "PBL4"
@@ -204,7 +204,7 @@ def clonePostContent(driver, postId, groupname):
         postData = {"post_id": postId, "post_text" : "", "post_date": "", "post_url": "https://www.facebook.com/groups/" + groupname + "/posts/" + str(postId)}
 
         driver.get("https://mbasic.facebook.com/groups/" + groupname + "/posts/" + str(postId))
-        
+
         contentElement = driver.find_elements(By.XPATH,"//div[@data-gt='{\"tn\":\"*s\"}']")
         if (len(contentElement) == 0):
             contentElement = driver.find_elements(By.XPATH,"//div[@data-ft='{\"tn\":\"*s\"}']")
@@ -250,7 +250,7 @@ def get_ID_List(driver, idGroup):
                         sumLinks.append(idPost)
                         idList.append(idPost)
                         writeFileTxt(fileIds, idPost)
-                        # print(idPost)
+                        print(idPost)
             page += 1
             nextBtn = driver.find_elements(By.XPATH,'//a[contains(@href, "?bacr")]')
             if (len(nextBtn)):
