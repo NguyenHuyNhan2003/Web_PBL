@@ -9,10 +9,20 @@ const recruitments = new Schema({
     anh: {type:String},
     language :{type:String},
     timedang:{type : String},
-    id:{type:String}
+    id:{type:String},
+    soluong:{type:String},
+    kinhnghiem:{type:String},
+    bangcap:{type:String},
+    mota:{type:String},
+    yeucau:{type:String}
 },{
     timestamps:true
 });
 module.exports = mongoose.model('recruitments',recruitments);
 
 
+// soluong: '',
+//     kinhnghiem: '',
+//     bangcap: '',
+//     mota: '',
+//     yeucau: ''

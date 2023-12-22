@@ -1,18 +1,23 @@
 /* Detail.css */
+.deatail-header{
+margin-left: 0;
 
+}
 .detail-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  margin-left: 0;
+  padding: 12px;
+  
+  /* border: 1px solid #ddd; */
+  /* border-radius: 8px; */
+
 }
 
-.detail-title {
-  font-size: 24px;
+.job-title {
+  font-size: 20px;
   color: #333;
   margin-bottom: 10px;
+  font-weight: 800;
 }
 
 .detail-content {
@@ -93,4 +98,144 @@
 
 .modal-content button:hover {
   background-color: #45a049;
+}
+/* phuc loi */
+.welfare-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Adjust as needed */
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+
+}
+
+.welfare-list li {
+  width: calc(33.33% - 10px); /* Adjust as needed, consider box-sizing */
+  margin-bottom: 10px; /* Adjust as needed */
+  text-align: center;
+}
+.detail-row {
+  /* background-color: #f0f0f0; Set your desired background color */
+  padding: 20px; /* Add padding for spacing */
+
+}
+
+ /* mo ta  */
+
+ .job-description {
+  margin: 0 auto;
+  background-color: #fff;
+  /* border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); */
+  padding: 20px;
+
+}
+
+.job-title {
+  color: #333;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+ 
+}
+
+.job-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.job-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.job-icon {
+  font-family: 'FontAwesome'; /* Set your custom icon font here */
+  font-size: 20px;
+  margin-right: 10px;
+  color: #3498db; /* Set your desired icon color */
+}
+
+.job-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.job-detail {
+  display: block;
+  margin-bottom: 5px;
+}
+/*  */
+
+.job-requirements-container {
+
+  margin: 0px auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.job-title {
+  color: #333;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+  font-weight: 800;
+}
+
+.job-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.job-point {
+  margin-bottom: 15px;
+}
+
+.loading-message:empty:before {
+  content: 'Đang tải dữ liệu...';
+  color: #888;
+}
+/*  */
+.additional-info-container {
+
+  margin: 0px auto;
+  background-color: #ffffff;
+  /* border-radius: 10px; */
+  /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); */
+  padding: 20px;
+}
+
+.info-title {
+  color: #333;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-content p {
+  margin-bottom: 15px;
+}
+
+.loading-message:empty:before {
+  content: 'Đang tải dữ liệu...';
+  color: #888;
+}
+
+/* dia diem lam viec  */
+.location-container {
+  display: flex; /* Sử dụng Flexbox để các phần tử con nằm trên cùng một hàng */
+  align-items: center; /* Canh chỉnh các phần tử con theo chiều dọc */
+}
+
+.map-marker-icon {
+  margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+  color: #3498db;
+  font-size:22px; 
 }

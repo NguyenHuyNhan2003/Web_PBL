@@ -13,13 +13,17 @@ router.get('/recruitment',PostController.cruitment);
 router.post('/sendmail',PostController.send_gmail)
 router.get('/recruitment/by/:id',PostController.getrecruitmentbyid)
 
+// upload picture 
+router.post('/upload',PostController.upload.single('file'),PostController.postUpload);
+router.get('/getImage',PostController.getImage);
+///
 
 
 //cần đăng nhập để truy cập các route dưới
 router.use(requireAuth.AuthAdmin)
 
 router.get('/',PostController.show);
-router.post('/create',PostController.createpost);
+router.post('/create',PostController.upload.single('anh'),PostController.createpost);
 router.get('/edit/recruitment/:_id',PostController.editbyid);
 router.put('/update/recruitment/:_id',PostController.updatebyid);
 router.delete('/delete/:id',PostController.deletebyid);

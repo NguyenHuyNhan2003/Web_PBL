@@ -16,7 +16,7 @@ export default function App() {
     <Navbar isBordered>
       <NavbarBrand>
         <AcmeLogo />
-        <p className='font-bold text-inherit'>ACME</p>
+        <p className='font-bold text-inherit'>Việc Làm IT 24h</p>
       </NavbarBrand>
       <NavbarContent className='hidden sm:flex gap-4' justify='center'>
         <NavbarItem>
@@ -29,9 +29,6 @@ export default function App() {
         </NavbarItem>
       </NavbarContent>
 
-      
-    
-     
       <NavbarContent justify='end'>
     
      

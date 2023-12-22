@@ -17,8 +17,8 @@ export default function Option({  setselectLuong }) {
       <SelectSection showDivider title='Tất cả lương'>
         <SelectItem key='all'>Tất cả các lương</SelectItem>
         <SelectItem key='10-15'>10-15 triệu</SelectItem>
-        <SelectItem key='15-25'>15-20 triệu</SelectItem>
-        <SelectItem key='thỏa thuận'>Thỏa Thuận</SelectItem>
+        <SelectItem key='15-25'>15-25 triệu</SelectItem>
+        <SelectItem key='trên 25'>Trên 25 triệu triệu</SelectItem>
       </SelectSection>
     </Select>
   );

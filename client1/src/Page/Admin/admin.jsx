@@ -2,6 +2,14 @@ import './admin.css'
 import React, { useEffect, useState } from 'react'
 import './JobPostingForm.css'
 import axios from 'axios'
+import { useRef  } from 'react'
+import {
+  successNotification,
+  errorNotification,
+  warningNotification,
+  infoNotification,
+  customNotification
+} from '../../component/Toast'
 import {
   Table,
   TableHeader,
@@ -19,7 +27,7 @@ export default function Admin() {
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
   const [error, setError] = useState(null)
-  const rowsPerPage = 2
+  const rowsPerPage = 3
 
   const api = ' http://localhost:5000/Post/'
   useEffect(() => {
@@ -27,7 +35,7 @@ export default function Admin() {
       console.log(user.token)
       fetch(api, {
         headers: {
-          'Authorization': `Bearer ${user.token}`
+          Authorization: `Bearer ${user.token}`
         }
       })
         .then((response) => response.json())
@@ -36,23 +44,23 @@ export default function Admin() {
           // if(data.error == null){
           // console.log(data.error)
           // setData([])
-          
+
           // }else{
           //   setData(data)
           // }
-          setData(data);
+          setData(data)
         })
         .catch((error) => {
           console.error('Error fetching data:', error)
         })
     }
   }, [user])
-  console.log(data);
+  console.log(data)
 
   const pages = Math.ceil(data.length / rowsPerPage)
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage
-    const end = start + rowsPerPage
+    const end = (start + rowsPerPage)
 
     return data.slice(start, end)
   }, [page, data])
@@ -62,7 +70,9 @@ export default function Admin() {
     <div className='admin-container'>
       <div className='admin'>
         <div className='left-column'>
-          <h1 className='heading-admin' style={{marginLeft:'60px', bottom: '20px'}}>Danh Sách Bài Post</h1>
+          <h1 className='heading-admin' style={{ marginLeft: '60px', bottom: '20px' }}>
+            Danh Sách Bài Post
+          </h1>
 
           <div>
             <Table
@@ -75,7 +85,7 @@ export default function Admin() {
                     showShadow
                     color='secondary'
                     page={page}
-                    total={data.length - 1}
+                    total={pages}
                     onChange={(page) => setPage(page)}
                   />
                 </div>
@@ -88,10 +98,8 @@ export default function Admin() {
                 width: '100%' // Ensure the table takes the full width of its container
               }}
             >
-            
-           
               <TableHeader>
-                <TableColumn key='id'style={{ width: '5%', textAlign: 'center' }}>
+                <TableColumn key='id' style={{ width: '10%', textAlign: 'center' }}>
                   Idpost
                 </TableColumn>
 
@@ -118,10 +126,9 @@ export default function Admin() {
         </div>
 
         <div className='right-column'>
-        <div style={{ display:'flex', justifyContent:"center"}}>
-        
-        <h2>Thêm Tuyển Dụng</h2>
-        </div>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <h2>Thêm Tuyển Dụng</h2>
+          </div>
           <JobPostingForm />
         </div>
       </div>
@@ -131,6 +138,7 @@ export default function Admin() {
 // Import file CSS nếu cần
 
 function JobPostingForm() {
+  const fileImage = useRef(null);
   const [error, setError] = useState(null)
   const { user } = useAuthContext()
   const [formData, setFormData] = useState({
@@ -142,35 +150,82 @@ function JobPostingForm() {
     anh: '',
     timedang: '',
     language: '',
-    id: ''
+    id: '',
+    soluong: '',
+    kinhnghiem: '',
+    bangcap: '',
+    mota: '',
+    yeucau: ''
   })
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target
+
+  //   if (!user) {
+  //     setError('You must be logged in')
+  //     warningNotification('You must be logged in')
+  //     return
+  //   }
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value
+  //   })
+  // }
 
   const handleChange = (event) => {
-    const { name, value } = event.target
+    const { name, value, type } = event.target
+
     if (!user) {
       setError('You must be logged in')
+      warningNotification('You must be logged in')
       return
     }
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  }
 
+    // Handle file input separately
+    if (type === 'file') {
+      setFormData({
+        ...formData,
+        [name]: event.target.files[0] // Assuming single file upload, adjust as needed
+      })
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      })
+    }
+  }
   const handleSubmit = (event) => {
     event.preventDefault()
     if (!user) {
       setError('You must be logged in')
       return
     }
+    const formDataToSend = new FormData()
+
+    // Append text fields to FormData
+    formDataToSend.append('congti', formData.congti)
+    formDataToSend.append('luong', formData.luong)
+    formDataToSend.append('vitri', formData.vitri)
+    formDataToSend.append('khuvuc', formData.khuvuc)
+    formDataToSend.append('level', formData.level)
+    formDataToSend.append('timedang', formData.timedang)
+    formDataToSend.append('language', formData.language)
+    formDataToSend.append('id', formData.id)
+    formDataToSend.append('soluong', formData.soluong)
+    formDataToSend.append('kinhnghiem', formData.kinhnghiem)
+    formDataToSend.append('bangcap', formData.bangcap)
+    formDataToSend.append('mota', formData.mota)
+    formDataToSend.append('yeucau', formData.yeucau)
+
+    // Append file to FormData
+    formDataToSend.append('anh', formData.anh)
     // Xử lý dữ liệu biểu mẫu, ví dụ: gửi dữ liệu đến máy chủ hoặc thực hiện các thao tác khác
-    console.log('Submitted data:', formData)
+    console.log('Submitted data:', formDataToSend)
 
     axios
-      .post('http://localhost:5000/post/create', formData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+      .post('http://localhost:5000/post/create', formDataToSend, {
+        headers: {     
+          Authorization: `Bearer ${user.token}`,
+          'Content-Type': 'multipart/form-data',
         }
       })
       .then((response) => {
@@ -178,7 +233,7 @@ function JobPostingForm() {
         if (response.status >= 200 && response.status < 300) {
           console.log('Recruitment saved:', response.data)
           // Trả về phản hồi cho client
-          setError('Thêm Thành Công')
+          successNotification('Thêm Thành Công')
 
           // Đặt lại giá trị mặc định cho các trường sau khi submit
           setFormData({
@@ -190,12 +245,21 @@ function JobPostingForm() {
             anh: '',
             timedang: '',
             language: '',
-            id: ''
-          })
+            id: '',
+            mota :'',
+            yeucau:'',
+            bangcap:'',
+            kinhnghiem:'',
+            soluong:'',
+            anh : ''
+
+          });
+          // reset 
+          fileImage.current.value = null;
         } else {
           // Xử lý trường hợp không thành công
           console.error('Error:', response.status, response.statusText)
-          alert('Không thể thêm bài đăng')
+          errorNotification('Không thể thêm bài đăng')
         }
       })
       .catch((error) => {
@@ -263,7 +327,7 @@ function JobPostingForm() {
         <label htmlFor='level'>Level:</label>
         <select id='level' name='level' value={formData.level} onChange={handleChange} required>
           <option value='entry'>Entry Level</option>
-          <option value='mid'>Mid Level</option>
+          <option value='midle'>Mid Level</option>
           <option value='senior'>Senior Level</option>
         </select>
       </div>
@@ -271,12 +335,12 @@ function JobPostingForm() {
       <div className='form-group'>
         <label htmlFor='skills'>Ảnh:</label>
         <input
+        ref = {fileImage}
           className='input-admin'
-          type='text'
+          type='file' // Change the input type to file
           id='skills'
           name='anh'
-          value={formData.anh}
-          onChange={handleChange}
+          onChange={handleChange} // Update the onChange handler
           required
         />
       </div>
@@ -309,10 +373,69 @@ function JobPostingForm() {
         <label htmlFor='postingTime'>Thời Gian Đăng:</label>
         <input
           className='input-admin'
-          type='datetime-local'
+          type='date'
           id='postingTime'
           name='timedang'
           value={formData.timedang}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className='form-group'>
+        <label htmlFor='skills'>Số lượng</label>
+        <input
+          className='input-admin'
+          type='text'
+          id='soluong'
+          name='soluong'
+          value={formData.soluong}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div className='form-group'>
+        <label htmlFor='skills'>Kinh Nghiệm</label>
+        <input
+          className='input-admin'
+          type='text'
+          id='kinhnghiem'
+          name='kinhnghiem'
+          value={formData.kinhnghiem}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className='form-group'>
+        <label htmlFor='skills'>Bằng Cấp</label>
+        <input
+          className='input-admin'
+          type='text'
+          id='bangcap'
+          name='bangcap'
+          value={formData.bangcap}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className='form-group'>
+        <label htmlFor='skills'>Mô Tả </label>
+        <textarea
+          className='input-admin'
+          id='mota'
+          name='mota'
+          value={formData.mota}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className='form-group'>
+        <label htmlFor='skills'>Yêu cầu</label>
+        <textarea
+          className='input-admin'
+          id='yeucau'
+          name='yeucau'
+          value={formData.yeucau}
           onChange={handleChange}
           required
         />
@@ -325,3 +448,6 @@ function JobPostingForm() {
     </form>
   )
 }
+
+// 'Content-Type': 'application/json',
+//'Content-Type': 'multipart/form-data',

@@ -5,7 +5,7 @@ import { animals } from './data'
 export default function App({vitri,setVitri}) {
   // const [values, setValues] = React.useState(new Set(['tatcaapbac']));
   const handleSelectionChange = (selectedValues) => {
-    setVitri(new Set(selectedValues));
+    // setVitri(new Set(selectedValues));
 
     // Convert the Set to an array before using or logging it
     const selectedArray = Array.from(selectedValues);
@@ -14,7 +14,8 @@ export default function App({vitri,setVitri}) {
     console.log('Selected Values:', selectedArray);
 
     // If you want to pass them to a function, you can do something like:
-    setVitri(new Set(selectedArray));
+    // setVitri(new Set(selectedArray));'
+    setVitri(selectedArray);
   }
 
   return (

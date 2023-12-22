@@ -19,7 +19,7 @@ import {
 
 import { Link } from 'react-router-dom'
 
-export default function App({ selectPlace ,selectluong , data , setData}) {
+export default function App({ selectPlace, selectluong, data, setData }) {
   const [selected, setSelected] = React.useState('all')
   return (
     <div className='flex w-full flex-col' style={{ paddingLeft: '20px' }}>
@@ -30,7 +30,7 @@ export default function App({ selectPlace ,selectluong , data , setData}) {
         style={{ fontSize: '1.5rem' }} // Set the desired font size here
       >
         <Tab key='all' title='Tất cả'>
-          <Cards selectPlace ={selectPlace} data={data}  setData={setData} />
+          <Cards selectPlace={selectPlace} data={data} setData={setData} />
         </Tab>
         <Tab key='lương' title='Lương'>
           <Card>
@@ -72,7 +72,15 @@ const MusicCard = ({ liked, onToggleLike, data }) => (
                 </Link>
               </h3>
               <p className='text-small text-foreground/80'>{data.linhvuc}</p>
-              <h1 className='text-large font-medium mt-2'>{data.luong}</h1>
+              {data.luong === 'thuong luong' ? (
+                // Render a different content when data.luong is 'thuong luong'
+                <h1 className='text-large font-medium mt-2'>Thương lượng</h1>
+              ) : (
+                // Render the <h1> element with the numerical value if data.luong is a number
+                <h1 className='text-large font-medium mt-2'>{(data.luong)}</h1>
+              )}
+              
+
               <h1 className='text-large font-medium mt-2'>{data.vitri} </h1>
               <span style={{ marginRight: '10px' }}>{data.employer}</span>
               <ul>
@@ -131,11 +139,11 @@ const App1 = ({ selectPlace }) => {
           console.log(err)
         })
     } else {
-      console.log(selectPlace);
+      console.log(selectPlace)
       fetch(`http://localhost:5000/company/search?q=${encodeURIComponent(selectPlace)}`)
         .then((response) => response.json())
         .then((res) => {
-          setData(res);
+          setData(res)
         })
         .catch((err) => {
           console.log(err)

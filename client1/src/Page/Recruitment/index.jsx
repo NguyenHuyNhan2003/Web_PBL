@@ -15,7 +15,7 @@ export default function Recruitment() {
   const [selectPlace, setselectPlace] = useState('')
   const [selectLuong, setselectLuong] = useState('')
   const [data, setData] = useState([])
-  const [vitri,setVitri] = useState('');
+  const [vitri, setVitri] = useState([])
   const [currentLanguage, setCurrentLanguage] = useState('JavaScript')
   useEffect(() => {
     const languageList = ['C++', 'Python', '.NET', 'Java', 'JavaScript'] // Danh sách các ngôn ngữ để chuyển đổi
@@ -31,9 +31,9 @@ export default function Recruitment() {
   useEffect(() => {
     // Thực hiện các hành động bạn muốn khi selectPlace thay đổi
     console.log('selectPlace changed:', selectPlace)
-    console.log(searchInput);
-    console.log(selectLuong);
-    console.log(vitri);
+    console.log(searchInput)
+    console.log(selectLuong)
+    console.log(vitri)
     // Ví dụ: Gọi một hàm hoặc thực hiện một tác vụ nào đó
     // fetchData();
   }, [selectPlace])
@@ -42,24 +42,27 @@ export default function Recruitment() {
     setsearchInput(event.target.value)
   }
   function handleSubmit(event) {
-    event.preventDefault(); 
+    event.preventDefault()
     console.log('selectPlace changed:', selectPlace)
-    console.log(searchInput);
-    console.log(selectLuong);
-    console.log(vitri);
-    fetch(`http://localhost:5000/company/search/all?q=${encodeURIComponent(searchInput)}&diadiem=${encodeURIComponent(selectPlace)}&luong=${encodeURIComponent(selectLuong)}`)
-    
+    console.log(searchInput)
+    console.log(selectLuong)
+    console.log(vitri)
+    fetch(
+      `http://localhost:5000/company/search/all?q=${encodeURIComponent(searchInput)}&diadiem=${encodeURIComponent(
+        selectPlace
+      )}&luong=${encodeURIComponent(selectLuong)}&vitri=${encodeURIComponent(vitri)}`
+    )
       .then((response) => response.json())
       .then((res) => {
-        console.log("Check");
+        console.log('Check')
         setData(res)
-        console.log(data);
+        console.log(data)
       })
       .catch((err) => {
         console.log(err)
       })
-      setsearchInput('');
-      console.log(searchInput);
+    setsearchInput('')
+    console.log(searchInput)
   }
   return (
     <div>
@@ -76,7 +79,7 @@ export default function Recruitment() {
               <input
                 typy='text'
                 className='search_skill'
-                placeholder='Tìm kiếm ngôn ngữ,công ti... '    
+                placeholder='Tìm kiếm ngôn ngữ,công ti... '
                 onChange={(event) => handleOnchange(event)}
                 value={searchInput}
               ></input>
@@ -87,13 +90,20 @@ export default function Recruitment() {
           </div>
         </form>
         <div className='Select'>
-          <Select selectPlace={setselectPlace}/>
+          <Select selectPlace={setselectPlace} />
           <SelectSalary style={selectStyle} setselectLuong={setselectLuong} />
-          <SelectMul style={selectStyle} setVitri ={setVitri}  vitri ={vitri}/>
+          <SelectMul style={selectStyle} setVitri={setVitri} vitri={vitri} />
         </div>
       </div>
       <div className='TabUi'>
-        <Tabui selectPlace={selectPlace} selectLuong={selectLuong} searchInput={searchInput} vitri = {vitri}  data = {data} setData={setData}/>
+        <Tabui
+          selectPlace={selectPlace}
+          selectLuong={selectLuong}
+          searchInput={searchInput}
+          vitri={vitri}
+          data={data}
+          setData={setData}
+        />
       </div>
     </div>
   )

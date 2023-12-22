@@ -1,6 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useLogin } from '../../hook/useLogin'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function LoginPage() {
   const {login,error,isLoading} = useLogin();
 
@@ -16,6 +19,8 @@ export default function LoginPage() {
   const onSubmit = async (data) => {
     console.log(data.email);
     console.log(data.password);
+    
+
     await login(data.email,data.password)
     reset()
   

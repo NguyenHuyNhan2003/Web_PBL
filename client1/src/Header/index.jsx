@@ -4,6 +4,8 @@ import Home from '../Page/Home/index.jsx'
 import Recruitment from '../Page/Recruitment/index.jsx'
 import Analisic from '../Page/AnaLitic/index.jsx'
 import Detail from '../Page/Detail_Recruitment/detail'
+
+import Drop from '../component/Dropdown_Custom/index.jsx';
 import './index.css'
 import { useLogout } from '../hook/useLogout.jsx'
 import { useAuthContext } from '../hook/useAuthContext.jsx'
@@ -83,19 +85,11 @@ export default function Header() {
             className={`text-${activeItem === 'Congti' ? 'active' : 'foreground'}`}
             onClick={() => handleItemClick('Congti')}
           >
-            Công Ti
+            Công Ty
           </RouterLink>
         </NavbarItem>
 
-        <NavbarItem>
-          <RouterLink
-            to='/Recruitment'
-            className={`text-${activeItem === 'CV' ? 'active' : 'foreground'}`}
-            onClick={() => handleItemClick('CV')}
-          >
-            CV
-          </RouterLink>
-        </NavbarItem>
+
 
         
       </NavbarContent>
@@ -103,9 +97,8 @@ export default function Header() {
       <NavbarContent justify='end'>
         {user && user.role =='user' &&(
           <div>
-            <span>{user.email}</span>
-            <button onClick={hanldleclick}>LOG OUT </button>
-          </div>
+          <Drop email={user.email} hanldleclick={hanldleclick} />
+        </div>
         )}
         {!user && (
           <NavbarContent justify='end'>
