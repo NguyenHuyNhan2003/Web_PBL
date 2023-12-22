@@ -18,7 +18,7 @@ router.post('/upload',PostController.upload.single('file'),PostController.postUp
 router.get('/getImage',PostController.getImage);
 ///
 
-router.post('/scraper',PostController.scrape)
+
 //cần đăng nhập để truy cập các route dưới
 router.use(requireAuth.AuthAdmin)
 

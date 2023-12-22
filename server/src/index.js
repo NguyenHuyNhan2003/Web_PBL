@@ -15,5 +15,5 @@ const routes = require('./routes');
 // kết nối db 
 routes(app);
 
-app.listen(process.env.PORT,()=>{console.log("Server runed on port ", process.env.PORT)});
+app.listen(process.env.PORT,()=>{console.log("Server running on port ", process.env.PORT)});
 

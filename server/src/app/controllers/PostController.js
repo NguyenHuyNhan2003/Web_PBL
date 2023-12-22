@@ -231,15 +231,5 @@ const { congti, luong, vitri, khuvuc, level, timedang, language, id, soluong, ki
       });
   };
 
-  scrape = async (req, res, next) => {
-    exec("py scraper.py", (error, stdout, stderr) => {
-      if (error) {
-        console.error(error.message);
-        return;
-      }
-      console.log("Function executed successfully: ", stdout);
-    });
-  };
-}
 
 module.exports = new PostController();
