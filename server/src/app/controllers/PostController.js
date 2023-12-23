@@ -231,5 +231,5 @@ const { congti, luong, vitri, khuvuc, level, timedang, language, id, soluong, ki
       });
   };
 
-
+}
 module.exports = new PostController();
