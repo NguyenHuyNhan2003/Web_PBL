@@ -14,9 +14,9 @@ import random
 import requests
 from time import sleep
 
-userName = '' # email or phone number
-passWord = '' # password
-pageNumber = 50
+userName = '0944143615' # email or phone number
+passWord = 'Nathan2511FBA' # password
+pageNumber = 2
 mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority' 
 DATABASE_NAME = "PBL4"
 today = datetime.now().strftime("%Y-%m-%d")
@@ -284,7 +284,7 @@ if __name__ == "__main__":
     if(isLogin == False):
         loginFB(driver, userName, passWord)
     
-    group = input('Enter group name (e.g: vieclamCNTTDaNang): ')
+    group = input('Enter group name (e.g: laptrinhvienit): ')
     value = input('Enter 1 to start crawling, enter any other keys to exit: ')
     
     filename = group + "_" + today + "_posts.xlsx"
