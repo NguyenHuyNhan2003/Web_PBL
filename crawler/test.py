@@ -13,7 +13,7 @@ def test():
         if client.server_info():
             print("Connected to MongoDB!")
             # read excel file
-            df = pd.read_excel('./result/laptrinhvienit_2023-12-21_posts.xlxs')
+            df = pd.read_excel('./result/laptrinhvienit_2023-12-23_posts.xlxs')
             data = df.to_dict('records')
             # insert data to mongodb
             collection.delete_many({}) #delete old posts
