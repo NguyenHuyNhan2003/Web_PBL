@@ -17,8 +17,8 @@ from tkinter import *
 
 userName = '102210267@sv1.dut.udn.vn' # email or phone number
 passWord = 'fbpw123!' # password
-pageNumber = 15
-mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority'
+pageNumber = 15 # number of pages to crawl
+mongoURI = 'mongodb://localhost:27017'
 DATABASE_NAME = "PBL4"
 today = datetime.now().strftime("%Y-%m-%d")
 
@@ -104,36 +104,36 @@ def initDriverProfile():
     return driver
 
 def convert_time(t):
-    date = "Failed to fetch!"
-    if(len(t) > 10):
-        if "," in t:
-            date = datetime.strptime(t, "%B %d, %Y at %I:%M %p")
-        else:
-            t = t.replace(" at", f", {datetime.now().year} at")
-            date = datetime.strptime(t, '%B %d, %Y at %I:%M %p')
-        return date.strftime("%Y-%m-%d %H:%M:%S")
-    
-    if 'h' in t.lower() or "hr" in t.lower() or "hrs" in t.lower():
-        hours_to_subract = re.sub(r"\D", '', t)
-        date = datetime.today() - timedelta(hours=int(hours_to_subract))
-        return date.strftime("%Y-%m-%d %H:%M:%S")
+    date = t
+    try:
+        if(len(t) > 10):
+            if "yesterday" in t.lower():
+                yesterday_date = datetime.now() - timedelta(days=1)
+                return yesterday_date.strftime("%d %B %Y at %H:%M:%S")
+        
+        elif 'h' in t.lower() or "hr" in t.lower() or "hrs" in t.lower():
+            hours_to_subract = re.sub(r"\D", '', t)
+            date = datetime.today() - timedelta(hours=int(hours_to_subract))
+            return date.strftime("%d %B %Y at %H:%M:%S")
 
-    if 'm' in t.lower() or "min" in t.lower() or "mins" in t.lower():
-        minutes_to_subtract = re.sub(r"\D", '', t)
-        date = datetime.now() - timedelta(minutes=int(minutes_to_subtract))
-        return date.strftime("%Y-%m-%d %H:%M:%S")
+        elif 'm' in t.lower() or "min" in t.lower() or "mins" in t.lower():
+            minutes_to_subtract = re.sub(r"\D", '', t)
+            date = datetime.now() - timedelta(minutes=int(minutes_to_subtract))
+            return date.strftime("%d %B %Y at %H:%M:%S")
 
-    if 's' in t.lower():
-        seconds_to_subtract = re.sub(r"\D", '', t)
-        date = datetime.now() - timedelta(seconds=int(seconds_to_subtract))
-        return date.strftime("%Y-%m-%d %H:%M:%S")
+        elif 's' in t.lower():
+            seconds_to_subtract = re.sub(r"\D", '', t)
+            date = datetime.now() - timedelta(seconds=int(seconds_to_subtract))
+            return date.strftime("%d %B %Y at %H:%M:%S")
 
-    elif 'd' in t.lower() or "ds" in t.lower():
-        days_to_subtract = re.sub(r"\D", '', t)
-        date = datetime.today() - timedelta(days=int(days_to_subtract))
-        return date.strftime("%Y-%m-%d %H:%M:%S")
+        elif 'd' in t.lower() or "ds" in t.lower():
+            days_to_subtract = re.sub(r"\D", '', t)
+            date = datetime.today() - timedelta(days=int(days_to_subtract))
+            return date.strftime("%d %B %Y at %H:%M:%S")
 
-    return date
+        return date
+    except:
+        return date
 
 def checkLiveClone(driver):
     try:
@@ -209,16 +209,16 @@ def clonePostContent(driver, postId, groupname):
         contentElement = driver.find_elements(By.XPATH,"//div[@data-gt='{\"tn\":\"*s\"}']")
         if (len(contentElement) == 0):
             contentElement = driver.find_elements(By.XPATH,"//div[@data-ft='{\"tn\":\"*s\"}']")
-            
+              
         if (len(contentElement)):
             content = contentElement[0].text
             postData["text"] = content
+            print("ok text " + postId)  
         else:
             print("No text")
             return False
-        
         posted_time = driver.find_element(By.TAG_NAME, 'abbr').text
-        # print(posted_time)
+        print("ok time " + postId)
         if(len(posted_time)):
             postDate = convert_time(posted_time)
             print(posted_time + ' -> ' +postDate)
@@ -227,7 +227,7 @@ def clonePostContent(driver, postId, groupname):
         
         return postData
     except:
-        print("Fail clone Post")
+        print("Fail clone Post" + postId)
         return False
         
 def get_ID_List(driver, idGroup):
@@ -269,7 +269,7 @@ def crawlPostData(driver, postIds, group):
     postList = []
     for id in postIds:
         try:
-            time.sleep(2)
+            random_sleep(3,4)
             dataPost = clonePostContent(driver, id, group)
             if (dataPost != False ):
                 postList.append(dataPost)   
@@ -333,7 +333,7 @@ def Form(win):
     
     crawlButton = Button(win, text="Crawl", font=("Arial Bold", 10), bg="royalblue", fg="white", command = lambda: crawl_Button_click(entry, label2))
     
-    label2 = Label(win, text="Enter group name (e.g: laptrinhvienit): ", font=("Arial Bold", 10), bg="white", fg="black")
+    label2 = Label(win, text="Enter group name (e.g: jobITDaNang): ", font=("Arial Bold", 10), bg="white", fg="black")
     
     label.pack(pady=20)
     label2.pack(pady=5)
