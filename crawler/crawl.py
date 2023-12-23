@@ -15,8 +15,8 @@ import requests
 from time import sleep
 from tkinter import *
 
-userName = '0944143615' # email or phone number
-passWord = 'Nathan2511FBA' # password
+userName = '' # email or phone number
+passWord = '' # password
 pageNumber = 15
 mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority'
 DATABASE_NAME = "PBL4"
