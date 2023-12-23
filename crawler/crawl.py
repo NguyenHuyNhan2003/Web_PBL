@@ -13,11 +13,12 @@ import time
 import random
 import requests
 from time import sleep
+from tkinter import *
 
 userName = '0944143615' # email or phone number
 passWord = 'Nathan2511FBA' # password
-pageNumber = 2
-mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority' 
+pageNumber = 15
+mongoURI = 'mongodb+srv://adminPBL4:admin@pbl4.xemvqhk.mongodb.net/PBL4?retryWrites=true&w=majority'
 DATABASE_NAME = "PBL4"
 today = datetime.now().strftime("%Y-%m-%d")
 
@@ -277,30 +278,74 @@ def crawlPostData(driver, postIds, group):
             return False
     return postList
 
-if __name__ == "__main__":
+def is_non_empty_string(input_str):
+    # Kiểm tra xem chuỗi có rỗng và không chỉ chứa ký tự trắng hay không
+    if input_str and not input_str.isspace():
+        return True
+    else:
+        return False
+
+def crawler(group):
     driver = initDriverProfile()
     isLogin = checkLiveClone(driver)
     print(isLogin)
+    
     if(isLogin == False):
         loginFB(driver, userName, passWord)
-    
-    group = input('Enter group name (e.g: laptrinhvienit): ')
-    value = input('Enter 1 to start crawling, enter any other keys to exit: ')
-    
+        
     filename = group + "_" + today + "_posts.xlsx"
     folderPath = "./result/"
-    if (int(value) == 1):
-        # getPostsID(driver, group, 100)
-        idList = get_ID_List(driver, group)
-        postList = crawlPostData(driver, idList, group)
-        if(postList != False):
-            save_to_excel(postList, filename, folderPath)
-            driver.close()
-            print('Done!')
-        else:
-            driver.close()
-            print("Crawling failed")
+    
+    idList = get_ID_List(driver, group)
+    postList = crawlPostData(driver, idList, group)
+    if(postList != False):
+        save_to_excel(postList, filename, folderPath)
+        driver.close()
+        print('Done!')
+        return True
     else:
-        print('Exit!')
+        driver.close()
+        print("Crawling failed")
+        return False
         
-# py scraper.py
+def crawl_Button_click(entry, label2):
+    group = entry.get()
+    check_crawl = False
+    if(is_non_empty_string(entry.get())):
+        label2.config(text="Crawling " + group + " ...")
+        check_crawl = crawler(group)
+        if(check_crawl == True):
+            label2.config(text="Crawled " + group + " successfully!")
+        else:
+            label2.config(text="Crawling " + group + " failed!")
+    else:
+        label2.config(text="Please enter a group ID!")
+
+def Form(win):
+    win.title("Facebook Crawler")
+    win.geometry("500x250")
+    win.configure(bg="white")
+    win.resizable(False, False)
+    
+    label = Label(win, text="Facebook Crawler", font=("Arial Bold", 20), bg="white", fg="royalblue")
+    
+    entry = Entry(win, width=20, font = ("Aria", 15), bg = "ghostwhite")
+    
+    crawlButton = Button(win, text="Crawl", font=("Arial Bold", 10), bg="royalblue", fg="white", command = lambda: crawl_Button_click(entry, label2))
+    
+    label2 = Label(win, text="Enter group name (e.g: laptrinhvienit): ", font=("Arial Bold", 10), bg="white", fg="black")
+    
+    label.pack(pady=20)
+    label2.pack(pady=5)
+    entry.pack(pady=10)
+    crawlButton.pack(pady=5)
+    
+    entry.focus()
+    
+    win.mainloop()
+    
+if __name__ == "__main__":
+    win = Tk()
+    Form(win)
+
+# py crawl.py
