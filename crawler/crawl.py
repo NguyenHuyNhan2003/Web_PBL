@@ -17,7 +17,7 @@ from tkinter import *
 
 userName = '102210267@sv1.dut.udn.vn' # email or phone number
 passWord = 'fbpw123!' # password
-pageNumber = 15 # number of pages to crawl
+pageNumber = 3 # number of pages to crawl
 mongoURI = 'mongodb://localhost:27017'
 DATABASE_NAME = "PBL4"
 today = datetime.now().strftime("%Y-%m-%d")
