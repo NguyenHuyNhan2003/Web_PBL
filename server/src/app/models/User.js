@@ -116,7 +116,7 @@ Users.statics.notify_newrecuitments = async function(congty){
             from: sender,
             to: user.email,
             subject: 'New Recruitment Notification',
-            text: `Dear ${user.email},\n\nThere are new recruitments for ${congty} at our website. Check it out!`
+            text: `Dear ${user.email},\n\nThere is a new recruitment for ${congty} at our website.Check it out!`
         };
 
         await transporter.sendMail(mailOptions);
