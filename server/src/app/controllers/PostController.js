@@ -128,15 +128,18 @@ class PostController {
       .catch(next);
   }
   //get [/data/]
+  
   show(req, res, next) {
     console.log("1");
     Posts.find({})
+      .sort({time: -1}) // Sắp xếp theo thời gian giảm dần
       .then((data) => {
         console.log("Found record:", data);
         res.json(data);
       })
       .catch(next);
   }
+
   create(req, res, next) {
     Recruitment.find({})
       .sort({ timedang: -1 })
@@ -230,6 +233,39 @@ const { congti, luong, vitri, khuvuc, level, timedang, language, id, soluong, ki
         res.status(400).json({ error: error.message });
       });
   };
+
+  commentPost = async (req, res, next) => {
+    try {
+      const  id  = req.params.id;
+      const { value } = req.body;
+  
+
+      const post = await Recruitment.findById({_id:id});
+  
+      if (!post) {
+        return res.status(404).json({ error: 'Recruitment post not found' });
+      }
+  
+      console.log(post);
+      console.log(id + "    " + value);
+  
+      // Update the comments array
+      post.comments.push(value);
+  
+      // Save the updated document
+      const updatedPost = await post.save();
+  
+      // Send the updated document as the response
+      console.log(updatedPost);
+      res.json(updatedPost);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
+
+
 }
 
 module.exports = new PostController();

@@ -14,7 +14,8 @@ const recruitments = new Schema({
     kinhnghiem:{type:String},
     bangcap:{type:String},
     mota:{type:String},
-    yeucau:{type:String}
+    yeucau:{type:String},
+    comments: { type: [String], default: [] }
 },{
     timestamps:true
 });

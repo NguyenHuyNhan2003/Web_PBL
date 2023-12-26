@@ -1,9 +1,10 @@
 import React from 'react'
-import { Tabs, Tab, Card, CardBody } from '@nextui-org/react'
+
 import Cards from './Card/Card'
 import { useState, useEffect } from 'react'
+import { Image, Button, Slider, Tabs, Tab, Card, CardBody  } from '@nextui-org/react'
 
-import { Image, Button, Slider } from '@nextui-org/react'
+
 import { HeartIcon } from './Card/HeartIcon'
 
 import {

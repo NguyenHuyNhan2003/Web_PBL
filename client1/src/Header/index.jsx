@@ -81,11 +81,20 @@ export default function Header() {
 
         <NavbarItem>
           <RouterLink
-            to='/Recruitment'
+            to='/Congti'
             className={`text-${activeItem === 'Congti' ? 'active' : 'foreground'}`}
             onClick={() => handleItemClick('Congti')}
           >
             Công Ty
+          </RouterLink>
+        </NavbarItem>
+        <NavbarItem>
+          <RouterLink
+            to='/BlogIt'
+            className={`text-${activeItem === 'BlogIt' ? 'active' : 'foreground'}`}
+            onClick={() => handleItemClick('BlogIt')}
+          >
+            Blog It
           </RouterLink>
         </NavbarItem>
 

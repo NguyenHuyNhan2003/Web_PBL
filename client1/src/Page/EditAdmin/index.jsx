@@ -189,7 +189,7 @@ export default function Edit() {
       <button style={{ backgroundColor: 'green' }} type='submit'>
         Cập Nhật Tuyển Dụng
       </button>
-      {error && <div className='error'>{error}</div>}
+      
     </form>
   )
 }
