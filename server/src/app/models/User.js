@@ -121,7 +121,7 @@ Users.statics.notify_newrecuitments = async function(congti, diadiem, vitri){
                     \n${vitri}
                     \nCheck it out at our website!`
 
-
+        }
         await transporter.sendMail(mailOptions);
     });
 
