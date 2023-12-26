@@ -116,11 +116,11 @@ Users.statics.notify_newrecuitments = async function(congti, diadiem, vitri){
             from: sender,
             to: user.email,
             subject: 'New Recruitment Notification',
-            text: `Dear ${user.email},\n\nThere are new recruitments for ${congti} at our website:
+            text: `Dear ${user.email},\n\nThere are new recruitments for ${congti}:
                     \n${diadiem}
                     \n${vitri}
                     \nCheck it out at our website!`
-        };
+
 
         await transporter.sendMail(mailOptions);
     });
