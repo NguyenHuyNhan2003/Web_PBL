@@ -176,7 +176,7 @@ const { congti, luong, vitri, khuvuc, level, timedang, language, id, soluong, ki
       .then((savedRecruitment) => {
         console.log("Recruitment saved:", savedRecruitment);
 
-        Users.notify_newrecuitments(savedRecruitment.congti)
+        Users.notify_newrecuitments(savedRecruitment.congti, savedRecruitment.khuvuc, savedRecruitment.vitri)
 
         res.status(201).json({
           message: "Recruitment created successfully",

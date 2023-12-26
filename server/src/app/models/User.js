@@ -96,7 +96,7 @@ Users.statics.change_pass = async function(email, password){
     return user
 }
 
-Users.statics.notify_newrecuitments = async function(congty){
+Users.statics.notify_newrecuitments = async function(congti, diadiem, vitri){
     const users = await this.find({});
 
     const sender = process.env.EMAIL;
@@ -116,8 +116,11 @@ Users.statics.notify_newrecuitments = async function(congty){
             from: sender,
             to: user.email,
             subject: 'New Recruitment Notification',
-            text: `Dear ${user.email},\n\nThere is a new recruitment for ${congty} at our website.Check it out!`
-        };
+            text: `Dear ${user.email},\n\nThere are new recruitments for ${congti}:
+                    \n${diadiem}
+                    \n${vitri}
+                    \nCheck it out at our website!`
+
 
         await transporter.sendMail(mailOptions);
     });
