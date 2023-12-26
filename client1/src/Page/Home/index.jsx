@@ -1,4 +1,4 @@
-import Slider from 'react-slick';
+import Slider from 'react-slick'
 import anh1 from '../../css/img/Screenshot 2023-12-14 130826.png'
 import anh2 from '../../css/img/giaodien2.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,17 +9,28 @@ import anhcongti from '../../css/img/telexpert.png'
 import eo from '../../css/img/eon.png'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Footer from '../Footer'
+import { Card } from '../../component/Blog/Card'
+
+import react from 'react'
+import { company } from '../../css/assets/data/data'
+import '../../component/category/category.css'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import { GrFormPrevious } from 'react-icons/gr'
+import { MdNavigateNext } from 'react-icons/md'
 
 function Home() {
   return (
     <div>
       <Banner />
-      <CompanyTop />
+      <Congtinoibat />
       <JobOutstanding />
+      <CompanyTop />
+
       <BlogIt />
       <Reviewer />
       <Footer />
-      <UploadPic />
     </div>
   )
 }
@@ -28,13 +39,11 @@ export default Home
 const Banner = () => {
   return (
     <section className='banner'>
-    <div>
-      <img src={anh1} alt='Banner Image 1' />
-    
+      <div>
+        <img src={anh1} alt='Banner Image 1' />
+      </div>
+      {/* Add more slides as needed */}
 
-    </div>
-    {/* Add more slides as needed */}
-  
       <div className='banner-content'></div>
     </section>
   )
@@ -58,7 +67,7 @@ const CompanyTop = () => {
             <img style={{ width: '98px', height: '98px', padding: '16px 8px ' }} src={anhcongti}></img>
           </div>
           <div className={congti.company_content}>
-            <h2 className={congti.heading_challenge}> CHALLENGE</h2>
+            <h2 className={congti.heading_challenge}> Tek Expect</h2>
           </div>
         </div>
 
@@ -67,7 +76,7 @@ const CompanyTop = () => {
             <img style={{ width: '98px', height: '98px', padding: '16px 8px ' }} src={eo}></img>
           </div>
           <div className={congti.company_content}>
-            <h2 className={congti.heading_challenge}> CHALLENGE</h2>
+            <h2 className={congti.heading_challenge}> EOmail</h2>
           </div>
         </div>
       </div>
@@ -76,6 +85,18 @@ const CompanyTop = () => {
 }
 
 const JobOutstanding = () => {
+  const [data, setData] = useState([])
+  useEffect(() => {
+    fetch('http://localhost:5000/post/create')
+      .then((response) => response.json())
+      .then((res) => {
+        setData(res.slice(0, 12))
+        console.log(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
   return (
     <div className={styles.container_newjob}>
       <div className={styles.listnewjob}>
@@ -85,110 +106,22 @@ const JobOutstanding = () => {
         </div>
 
         <div className={styles.newjob_maincontent}>
-          <div className={styles.item_newsjob}>
-            <div className={styles.company_image}>
-              <img style={{ width: '98px', height: '98px', padding: '16px 8px ' }} src={anhcongti}></img>
-            </div>
-            <div className={styles.newjob_content}>
-              <h1 className={styles.newjob_title}> Senior Business Analisic</h1>
-              <h3 className={styles.newjob_namecompany}>MB Ageas Life</h3>
-              <span className={styles.newjob_namelanguage}>HTML JAVA</span>
-            </div>
-          </div>
-
-          <div className={styles.item_newsjob}>
-            <div className={styles.company_image}>
-              <img style={{ width: '98px', height: '98px', padding: '16px 8px ' }} src={anhcongti}></img>
-            </div>
-            <div className={styles.newjob_content}>
-              <h1 className={styles.newjob_title}> Senior Business Analisic</h1>
-              <h3 className={styles.newjob_namecompany}>MB Ageas Life</h3>
-              <span className={styles.newjob_namelanguage}>HTML JAVA</span>
-            </div>
-          </div>
-
-          <div className={styles.item_newsjob}>
-            <div className={styles.company_image}>
-              <img style={{ width: '98px', height: '98px', padding: '16px 8px ' }} src={anhcongti}></img>
-            </div>
-            <div className={styles.newjob_content}>
-              <h1 className={styles.newjob_title}> Senior Business Analisic</h1>
-              <h3 className={styles.newjob_namecompany}>MB Ageas Life</h3>
-              <span className={styles.newjob_namelanguage}>HTML JAVA</span>
-            </div>
-          </div>
-
-          <div className={styles.item_newsjob}>
-            <div className={styles.company_image}>
-              <img style={{ width: '98px', height: '98px', padding: '16px 8px ' }} src={anhcongti}></img>
-            </div>
-            <div className={styles.newjob_content}>
-              <h1 className={styles.newjob_title}> Senior Business Analisic</h1>
-              <h3 className={styles.newjob_namecompany}>MB Ageas Life</h3>
-              <span className={styles.newjob_namelanguage}>HTML JAVA</span>
-            </div>
-          </div>
-
-          <div className={styles.item_newsjob}>
-            <div className={styles.company_image}>
-              <img style={{ width: '98px', height: '98px', padding: '16px 8px ' }} src={anhcongti}></img>
-            </div>
-            <div className={styles.newjob_content}>
-              <h1 className={styles.newjob_title}> Senior Business Analisic</h1>
-              <h3 className={styles.newjob_namecompany}>MB Ageas Life</h3>
-              <span className={styles.newjob_namelanguage}>HTML JAVA</span>
-            </div>
-          </div>
-
-          <div className={styles.item_newsjob}>
-            <div className={styles.company_image}>
-              <img style={{ width: '98px', height: '98px', padding: '16px 8px ' }} src={anhcongti}></img>
-            </div>
-            <div className={styles.newjob_content}>
-              <h1 className={styles.newjob_title}> Senior Business Analisic</h1>
-              <h3 className={styles.newjob_namecompany}>MB Ageas Life</h3>
-              <span className={styles.newjob_namelanguage}>HTML JAVA</span>
-            </div>
-          </div>
+          {data.map((element, index) => {
+            return (
+              <div className={styles.item_newsjob}>
+                <div className={styles.company_image}>
+                  <img style={{ width: '98px', height: '98px', padding: '16px 8px ' }} src={`http://localhost:5000/Images/`+element.anh}></img>
+                </div>
+                <div className={styles.newjob_content}>
+                  <h1 className={styles.newjob_title}> {element.vitri}</h1>
+                  <h3 className={styles.newjob_namecompany}>{element.congti}</h3>
+                  <span className={styles.newjob_namelanguage}>{element.language}</span>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
-    </div>
-  )
-}
-
-// test uploa fiel anh
-
-const UploadPic = () => {
-  const [file, setFile] = useState(null)
-  const [image, setImageUrl] = useState()
-  const [image0, setImage] = useState()
-  const handleImage = (e) => {
-    console.log(e.target.files[0])
-    setImageUrl(e.target.files[0])
-  }
-  const SubmitImage = (e) => {
-    e.preventDefault()
-    const formData = new FormData()
-    formData.append('file', image) // Corrected line
-    axios
-      .post('http://localhost:5000/post/upload', formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-  }
-  useEffect(() => {
-    axios
-      .get('http://localhost:5000/post/getImage')
-      .then((result) => setImage(result.data[10].image))
-      .catch((err) => console.log(err))
-  },[])
- console.log(image0);
-  return (
-    <div>
-      <form onSubmit={SubmitImage}>
-        <input type='file' name='file' onChange={handleImage}></input>
-        {image0 && <img src={`http://localhost:5000/Images/`+ image0} alt='Uploaded' style={{ maxWidth: '100%', maxHeight: '300px' }} />}
-        <button type='submit'>Submit</button>
-      </form>
     </div>
   )
 }
@@ -200,26 +133,80 @@ const BlogIt = () => {
   return (
     <div>
       <div>
-        <h1>Blog IT</h1>
+        <h1 className={styles.heading_company}>Blog IT</h1>
       </div>
+      <Card />
     </div>
   )
 }
-
-const Statistics = () => {
-  return <section className='statistics'>{/* Hiển thị số liệu thống kê */}</section>
-}
-
 const Reviewer = () => {
   return (
     <div>
       <div>
-        <h1> Đánh Giá Người Dùng </h1>
+        <h1 className={styles.heading_company}>Đánh giá người dùng</h1>
       </div>
     </div>
   )
 }
-
-const Footer = () => {
-  return <footer>Footer</footer>
+const Congtinoibat = () => {
+  const SampleNextArrow = (props) => {
+    const { onClick } = props
+    return (
+      <div className='control-btn' onClick={onClick}>
+        <button className='next'>
+          <MdNavigateNext className='icon' />
+        </button>
+      </div>
+    )
+  }
+  const SamplePrevArrow = (props) => {
+    const { onClick } = props
+    return (
+      <div className='control-btn' onClick={onClick}>
+        <button className='prev'>
+          <GrFormPrevious className='icon' />
+        </button>
+      </div>
+    )
+  }
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      }
+    ]
+  }
+  return (
+    <>
+      <h1 className={styles.heading_company}>Công ty nổi bật hiện nay</h1>
+      <section className='category'>
+        <div className='content'>
+          <Slider {...settings}>
+            {company.map((item) => (
+              <div className='boxs'>
+                <div className='box' key={item.id}>
+                  <img src={item.cover} alt='cover' />
+                  <div className='overlay'>
+                    <h4>{item.category}</h4>
+                    <p>{item.title}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </div>
+      </section>
+    </>
+  )
 }

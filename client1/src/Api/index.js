@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+const API = axios.create({ baseURL: 'http://localhost:5000' });
+
 export const getTotalPage = () => {
   return fetch('/data/view/').then((res) => {
     return res.json()
@@ -15,3 +19,6 @@ export const getReacts = () => {
     return res.json()
   })
 }
+
+
+export const comment = (value, id) => API.post(`/post/${id}/commentPost`,{ value });

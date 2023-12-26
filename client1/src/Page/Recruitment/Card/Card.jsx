@@ -24,7 +24,7 @@ import { Link } from 'react-router-dom'
 const MusicCard = ({ liked, onToggleLike, data }) => (
   <Card
     isBlurred
-    className='border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] mb-4 mr-8 transition-all hover:bg-foreground/10' // Added transition and hover effect
+    className='border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] mb-4 mr-8 transition-all hover:bg-pink-300' // Added transition and hover effect
     shadow='sm'
   >
     <CardBody>

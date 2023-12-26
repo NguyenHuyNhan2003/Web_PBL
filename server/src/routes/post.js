@@ -13,7 +13,10 @@ router.get('/recruitment',PostController.cruitment);
 router.post('/sendmail',PostController.send_gmail)
 router.get('/recruitment/by/:id',PostController.getrecruitmentbyid)
 
+router.post('/:id/commentPost',PostController.commentPost)
 // upload picture 
+
+
 router.post('/upload',PostController.upload.single('file'),PostController.postUpload);
 router.get('/getImage',PostController.getImage);
 ///

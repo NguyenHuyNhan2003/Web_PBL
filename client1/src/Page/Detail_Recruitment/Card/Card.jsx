@@ -68,7 +68,7 @@ const App = ({ data }) => {
     })
   }
 
-  console.log(data);
+ 
   return (
     <div>
       <div className='flex flex-wrap justify-center'>

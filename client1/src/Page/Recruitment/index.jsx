@@ -5,6 +5,7 @@ import Select from '../Select/index'
 import SelectSalary from '../Select/index copy'
 import SelectMul from '../Select/muilti'
 import Tabui from './Tabui'
+import Footer from '../Footer'
 //   <SearchOutlined />
 export default function Recruitment() {
   const selectStyle = {
@@ -64,14 +65,16 @@ export default function Recruitment() {
     setsearchInput('')
     console.log(searchInput)
   }
+
+
+    const handleScrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
   return (
-    <div>
+    <div >
       <div className='heading'>
         <div className='heading_search'>
-          <h2 className='heading_searchText'>
-            {' '}
-            Tìm kiếm <span className='heading_language'>{currentLanguage}</span>
-          </h2>
+          <h2 className='heading_searchText'> </h2>
         </div>
         <form>
           <div className='heading_search'>
@@ -105,6 +108,13 @@ export default function Recruitment() {
           setData={setData}
         />
       </div>
+      <div style={{background:"#E9EAEC", height:'100%'}}>
+      
+      <Footer/>
+      </div>
+   
     </div>
   )
 }
+
+// // Tìm kiếm <span className='heading_language'>{currentLanguage}</span>

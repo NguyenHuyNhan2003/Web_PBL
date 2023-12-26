@@ -8,6 +8,10 @@ import { MedicineBoxOutlined, DollarOutlined, FormOutlined } from '@ant-design/i
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '@fortawesome/fontawesome-free/css/all.css'
 import { FaMapMarkerAlt } from 'react-icons/fa'
+import { useAuthContext } from '../../hook/useAuthContext'
+
+
+import CommentSection from './CommentSection';
 import {
   faPlane,
   faMoney,
@@ -25,6 +29,7 @@ import {
   faSuitcase
 } from '@fortawesome/free-solid-svg-icons'
 export default function Detail() {
+
   const { id } = useParams()
   const [data, setData] = useState([])
   const [applicationStatus, setApplicationStatus] = useState(false)
@@ -33,6 +38,7 @@ export default function Detail() {
   const [Congti, setCongti] = useState([])
   const [Mota, setMota] = useState([])
   const [yeucau, setYeuCau] = useState([])
+  const {user} = useAuthContext();
   // useEffect(() => {
   //   fetch(`http://localhost:5000/post/by/${id}`)
   //     .then((result) => result.json())
@@ -45,14 +51,15 @@ export default function Detail() {
       .then((result) => result.json())
       .then((data) => {
         setCongti(data)
+   
       })
-  }, [id])
-  console.log(Congti)
+  },[id])
 
   useEffect(() => {
     if (Congti.mota) {
       const inputString = Congti.mota
-      console.log(inputString)
+      // console.log(inputString)
+    
 
       const arrayFromString = inputString.split('\n').map((item) => item.trim())
       setMota(arrayFromString)
@@ -150,6 +157,11 @@ export default function Detail() {
       <Motacongviec Mota={Mota} />
       <JobRequirements Congti={Congti} yeucau={yeucau} />
       <AdditionalInfo Congti={Congti} />
+
+      <div>
+      <CommentSection  Congti ={Congti} setCongti ={setCongti}/>
+
+      </div>
     </div>
   )
 }
@@ -383,85 +395,8 @@ const YourComponent = ({ Congti }) => {
           <div className='flex items-center mb-4 w-full'></div>
         </div>
       </div>
+
+      
     </div>
   )
 }
-
-//
-// <div className='detail-container'>
-// <h1 className='job-title'>Detail Tuyển dụng</h1>
-// <div className='detail-content'>
-//   <p>{data.text}</p>
-
-//   {applicationStatus ? (
-//     <p className='application-status'>Bạn đã ứng tuyển thành công!</p>
-//   ) : (
-//     <button className='apply-now-btn' onClick={handleApplyNow}>
-//       Ứng tuyển ngay
-//     </button>
-//   )}
-// </div>
-
-// {showModal && <ApplicationModal onClose={handleModalClose} onApply={handleApply} Congti={Congti} />}
-// </div>
-
-// mo ta cv
-// <li class='job-item'>
-// <span class='job-icon'>&#xf2c2;</span>
-// <div class='job-content'>
-//   <span class='job-detail'>
-//     Chịu trách nhiệm nghiên cứu, phát triển tính năng mới; đề xuất phương án cải tiến phần mềm;
-//   </span>
-// </div>
-// </li>
-// <li class='job-item'>
-// <span class='job-icon'>&#xf2c2;</span>
-// <div class='job-content'>
-//   <span class='job-detail'>Tích hợp các hệ thống phần mềm, xây dựng các API kết nối;</span>
-// </div>
-// </li>
-// <li class='job-item'>
-// <span class='job-icon'>&#xf2c2;</span>
-// <div class='job-content'>
-//   <span class='job-detail'>Phối hợp với BA, PM để đưa ra phương án, giải pháp lập trình phù hợp;</span>
-// </div>
-// </li>
-// <li class='job-item'>
-// <span class='job-icon'>&#xf2c2;</span>
-// <div class='job-content'>
-//   <span class='job-detail'>
-//     Thực hiện xây dựng tài liệu đặc tả kỹ thuật, hướng dẫn sử dụng và chuyển giao phần mềm cho phòng hệ thống
-//     vận hành.
-//   </span>
-// </div>
-// </li>
-
-//yeu cau cong vie c
-// <p className='job-point'>
-// {' '}
-// <FormOutlined
-//   style={{ color: ' #3498db', position: 'relative', bottom: '4px', marginRight: '4px', fontSize: '22px' }}
-// />{' '}
-// {Congti.mota}
-// </p>
-// <p className='job-point'>
-// {' '}
-// <FormOutlined
-//   style={{ color: ' #3498db', position: 'relative', bottom: '4px', marginRight: '7px', fontSize: '22px' }}
-// />
-// Có kinh nghiệm từ 2 năm trở lên ở vị trí tương đương và ưu tiên có kinh nghiệm lập trình các phần mềm tài
-// chính, chứng khoán.
-// </p>
-// <p className='job-point'>
-// <FormOutlined
-//   style={{ color: ' #3498db', position: 'relative', bottom: '4px', marginRight: '7px', fontSize: '22px' }}
-// />
-// Nắm rõ về security, xử lý đa luồng, performance, biểu đồ, animation, quản lý source code, unit test, ....
-// </p>
-// <p className='job-point'>
-// <FormOutlined
-//   style={{ color: ' #3498db', position: 'relative', bottom: '4px', marginRight: '5px', fontSize: '22px' }}
-// />{' '}
-// Ưu tiên ứng viên có khả năng một mình xây dựng cả Project (quy mô trung bình lớn - có nhiều hơn tối thiểu 20
-// tính năng) từ khi bắt đầu đến khi hoàn thiện.
-// </p>

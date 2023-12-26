@@ -11,12 +11,18 @@ import PostAdmin from '../Page/PostAdmin/PostAdmin.jsx'
 import EditAdmin from '../Page/EditAdmin/index.jsx'
 import LoginPage from '../Page/LoginPage/index.jsx'
 import Signup from '../Page/Signup/index.jsx'
+import BlogIT from '../Page/BlogIT/index.jsx'
+import Congti from '../Page/Company/index.jsx'
+import DetailsBlog from '../Page/DetailBlog/Detail.jsx'
 const publicRouter = [
   { path: '/Edit/recruitment/:_id', commponent: EditAdmin, Layout: 'Admin' },
   { path: '/', commponent: Home },
   { path: '/Home', commponent: Home },
   { path: '/Analytics', commponent: Analisic },
   { path: '/Recruitment', commponent: Recruitment },
+  {path: '/BlogIt', commponent: BlogIT },
+  {path: '/Congti', commponent: Congti },
+  {path: '/details/:id', commponent: DetailsBlog},
   { path: '/post/by/:id', commponent: Detail },
   { path: '/conpany/name/:company', commponent: Detailcompany },
   { path: '/Admin', commponent: Admin, Layout: 'Admin' },
