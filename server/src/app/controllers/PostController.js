@@ -3,6 +3,7 @@ const { mongooseToObject } = require("../util/mongose");
 const { mutipleMongooseToObject } = require("../util/mongose");
 const router = express.Router();
 const Posts = require("../models/Post");
+const Users = require("../models/User")
 const Recruitment = require("../models/Recruitment");
 const Image = require("../models/TestImage");
 
@@ -174,6 +175,9 @@ const { congti, luong, vitri, khuvuc, level, timedang, language, id, soluong, ki
       .save()
       .then((savedRecruitment) => {
         console.log("Recruitment saved:", savedRecruitment);
+
+        Users.notify_newrecuitments(savedRecruitment.congti)
+
         res.status(201).json({
           message: "Recruitment created successfully",
           recruitment: savedRecruitment,

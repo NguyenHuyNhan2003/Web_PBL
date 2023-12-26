@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt')
 const validator = require('validator');
 const { use } = require('../../routes/page');
 
+const nodemailer = require("nodemailer");
+
 const Users = new Schema({
     email: {
         type: String,
@@ -92,6 +94,35 @@ Users.statics.change_pass = async function(email, password){
     const user = await this.findOneAndUpdate({email}, {password: hass})
 
     return user
+}
+
+Users.statics.notify_newrecuitments = async function(congty){
+    const users = await this.find({});
+
+    const sender = process.env.EMAIL;
+
+    const config = {
+      service: "gmail",
+      auth: {
+        user: sender,
+        pass: process.env.MAIL_PASS,
+      },
+    };
+
+    const transporter = nodemailer.createTransport(config);
+
+    users.forEach(async (user) => {
+        const mailOptions = {
+            from: sender,
+            to: user.email,
+            subject: 'New Recruitment Notification',
+            text: `Dear ${user.email},\n\nThere are new recruitments for ${congty} at our website. Check it out!`
+        };
+
+        await transporter.sendMail(mailOptions);
+    });
+
+    console.log('Emails sent to all users.');
 }
 
 module.exports = mongoose.model('Users',Users);
