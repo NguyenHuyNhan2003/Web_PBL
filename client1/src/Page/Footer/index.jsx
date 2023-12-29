@@ -1,7 +1,35 @@
+import React, { useState, useEffect } from 'react';
 export default function Footer() {
+  
+
+    const [isVisible, setIsVisible] = useState(false);
+  
+    const handleScroll = () => {
+      // Kiểm tra giá trị cuộn
+      if (window.scrollY > 1000) {
+        // Nếu vị trí cuộn lớn hơn 500px, hiển thị button
+        setIsVisible(true);
+      } else {
+        // Ngược lại, ẩn button
+        setIsVisible(false);
+      }
+    };
+
+
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+
+  useEffect(() => {
+    // Gắn sự kiện cuộn khi component được mount
+    window.addEventListener('scroll', handleScroll);
+
+    // Hủy sự kiện khi component bị unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []); // [] đảm bảo sự kiện chỉ được gắn một lần khi component được mount
   return (
     <div className='Footer'>
       <div class='bg-white p-4 py-16 text-base text-gray-600'>
@@ -228,9 +256,9 @@ export default function Footer() {
             Copyright © CÔNG TY CỔ PHẦN Ngô Đình Phước / ĐKKD: 031 303 2338 - Cấp ngày: 03/02/2023
           </div>
           <button
-            class='fixed bottom-[9.5rem] right-6 z-30 inline-flex h-12 w-12 items-center justify-center rounded
-            border border-solid border-primary-200 bg-primary/80 text-2xl text-white transition-all hover:bg-primary
-            lg:bottom-32 lg:right-10 visible opacity-100'
+          className={`fixed bottom-[9.5rem] right-6 z-30 inline-flex h-12 w-12 items-center justify-center rounded
+          border border-solid border-primary-200 bg-primary/80 text-2xl text-white transition-all hover:bg-primary
+          lg:bottom-32 lg:right-10 ${isVisible ? 'visible opacity-100' : 'invisible opacity-0'}`}
             type='button'
             onClick={handleScrollToTop}
           >
