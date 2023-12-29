@@ -20,6 +20,8 @@ import 'slick-carousel/slick/slick-theme.css'
 import { GrFormPrevious } from 'react-icons/gr'
 import { MdNavigateNext } from 'react-icons/md'
 
+import MessengerCustomerChat from 'react-messenger-customer-chat';
+
 function Home() {
   return (
     <div>
@@ -29,8 +31,15 @@ function Home() {
       <CompanyTop />
 
       <BlogIt />
+
       <Reviewer />
+
+
+    
+    
       <Footer />
+
+
     </div>
   )
 }
@@ -142,9 +151,7 @@ const BlogIt = () => {
 const Reviewer = () => {
   return (
     <div>
-      <div>
-        <h1 className={styles.heading_company}>Đánh giá người dùng</h1>
-      </div>
+     
     </div>
   )
 }

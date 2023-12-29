@@ -5,7 +5,7 @@ import Recruitment from '../Page/Recruitment/index.jsx'
 import Analisic from '../Page/AnaLitic/index.jsx'
 import Detail from '../Page/Detail_Recruitment/detail'
 
-import Drop from '../component/Dropdown_Custom/index.jsx';
+import Drop from '../component/Dropdown_Custom/index.jsx'
 import './index.css'
 import { useLogout } from '../hook/useLogout.jsx'
 import { useAuthContext } from '../hook/useAuthContext.jsx'
@@ -40,13 +40,13 @@ export default function Header() {
   }
 
   const { user } = useAuthContext()
-// console.log(user.role);
+  // console.log(user.role);
   const { logout } = useLogout()
-  const navigation = useNavigate();
+  const navigation = useNavigate()
   function hanldleclick() {
     console.log('Đã log out ')
     logout()
-    navigation('/Login'); 
+    navigation('/Login')
   }
   return (
     <Navbar style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
@@ -66,8 +66,6 @@ export default function Header() {
           </RouterLink>
         </NavbarItem>
 
-   
-
         <NavbarItem>
           <RouterLink
             to='/Recruitment'
@@ -77,7 +75,6 @@ export default function Header() {
             Tuyển Dụng
           </RouterLink>
         </NavbarItem>
-
 
         <NavbarItem>
           <RouterLink
@@ -98,16 +95,31 @@ export default function Header() {
           </RouterLink>
         </NavbarItem>
 
-
-
-        
+        <ul className='flex text-white'>
+          <li className='group relative'>
+            <a href='#' className='dropbtn cursor-pointer py-6' style={{ color: 'black' }}>
+              Nhà tuyển dụng
+            </a>
+            <div
+              className='hidden absolute text-white mt-2 group-hover:block bg-white shadow-md'
+              style={{ width: '200px' }}
+            >
+            <a href='https://www.facebook.com/groups/681905030786388' className='block px-4 py-2 hover:bg-white hover:text-black' style={{ color: 'black' }}>
+                Đăng tin
+              </a>
+              <a href='#' className='block px-4 py-2 hover:bg-white hover:text-black' style={{ color: 'black' }}>
+                Blog
+              </a>
+            </div>
+          </li>
+        </ul>
       </NavbarContent>
 
       <NavbarContent justify='end'>
-        {user && user.role =='user' &&(
+        {user && user.role == 'user' && (
           <div>
-          <Drop email={user.email} hanldleclick={hanldleclick} />
-        </div>
+            <Drop email={user.email} hanldleclick={hanldleclick} />
+          </div>
         )}
         {!user && (
           <NavbarContent justify='end'>
@@ -123,7 +135,7 @@ export default function Header() {
             </NavbarItem>
           </NavbarContent>
         )}
-        {user && user.role =='admin' && (
+        {user && user.role == 'admin' && (
           <NavbarContent justify='end'>
             <NavbarItem className='hidden lg:flex'>
               <Link href='/Login' className='navbar-link'>
@@ -165,8 +177,6 @@ export default function Header() {
 //     </div>
 //   </div>
 // )}
-
-
 
 // <NavbarItem>
 // <RouterLink

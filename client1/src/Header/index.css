@@ -34,9 +34,9 @@ th {
 
 a {
   text-decoration: none; /* Loại bỏ gạch chân từ liên kết */
-  color: #3498db; /* Màu cho liên kết */
+   /* Màu cho liên kết */
 }
 
 a:hover {
-  font-weight: bold; /* Tăng độ đậm khi di chuột qua liên kết */
+  font-weight: 600; /* Tăng độ đậm khi di chuột qua liên kết */
 }

@@ -13,11 +13,20 @@ export default function DetailsBlog() {
   const [blogs, setBlogs] = useState(null)
 
   useEffect(() => {
-    let blogs = blog.find((blogs) => blogs.id === parseInt(id))
-    if (blogs) {
-      setBlogs(blogs)
-    }
-  }, [])
+    // Replace 'http://localhost:5000/blog/by/658d7c5423ad0a5f79f7e387' with your actual API endpoint
+    fetch(`http://localhost:5000/blog/by/${id}`)
+      .then(response => response.json())
+      .then(data => setBlogs(data))
+      .catch(error => console.error('Error fetching blog data:', error));
+  }, []);
+
+  // useEffect(() => {
+  //   let blogs = blog.find((blogs) => blogs.id === parseInt(id))
+  //   if (blogs) {
+  //     setBlogs(blogs)
+  //   }
+  // }, [])
+  // console.log(blogs.desc)
 
   return (
     <>
@@ -25,7 +34,7 @@ export default function DetailsBlog() {
         <section className='singlePage'>
           <div className='container'>
             <div className='left'>
-              <img src={blogs.cover} alt='' />
+              <img src={`http://localhost:5000/Images_Blog/`+blogs.cover} alt='' />
             </div>
             <div className='right'>
               <div className='buttons'>
@@ -37,7 +46,9 @@ export default function DetailsBlog() {
                 </button>
               </div>
               <h1>{blogs.title}</h1>
-              <p>{blogs.desc}</p>
+              <p style={{ whiteSpace: 'pre-line', paddingLeft:'10px'}}>{blogs.desc}</p>
+
+
               <p>        
               </p>
               <p>Author: Sunil</p>
