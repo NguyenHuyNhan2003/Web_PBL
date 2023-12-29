@@ -35,7 +35,7 @@ export default function PostAdmin() {
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
   const rowsPerPage = 2
-  const api = 'http://localhost:5000/Post/recruitment'
+  const api = 'http://wandertour.ddns.net:5000/Post/recruitment'
   const [error, setError] = useState(null)
   useEffect(() => {
     if (user) {
@@ -70,7 +70,7 @@ export default function PostAdmin() {
     }
     console.log(`Delete button clicked for post with id: ${postId}`)
     axios
-      .delete(`http://localhost:5000/post/delete/${postId}`, {
+      .delete(`http://wandertour.ddns.net:5000/post/delete/${postId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }

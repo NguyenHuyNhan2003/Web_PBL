@@ -16,7 +16,7 @@ function Company() {
 
   const [data, setData] = useState([])
   useEffect(() => {
-    fetch('http://localhost:5000/company')
+    fetch('http://wandertour.ddns.net:5000/company')
       .then((response) => response.json())
       .then((res) => {
         setData(res)

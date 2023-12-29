@@ -34,7 +34,7 @@ export default function CommentSection({ Congti, setCongti }) {
     }
   }
   // useEffect(()=>{
-  //   fetch(`http://localhost:5000/post/recruitment/by/${Congti.id}`)
+  //   fetch(`http://wandertour.ddns.net:5000/post/recruitment/by/${Congti.id}`)
   //   .then((result) => result.json())
   //   .then((data) => {
   //     setCongti(data)

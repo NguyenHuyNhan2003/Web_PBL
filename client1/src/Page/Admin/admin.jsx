@@ -29,7 +29,7 @@ export default function Admin() {
   const [error, setError] = useState(null)
   const rowsPerPage = 3
 
-  const api = ' http://localhost:5000/Post/'
+  const api = ' http://wandertour.ddns.net:5000/Post/'
   useEffect(() => {
     if (user) {
       console.log(user.token)
@@ -222,7 +222,7 @@ function JobPostingForm() {
     console.log('Submitted data:', formDataToSend)
 
     axios
-      .post('http://localhost:5000/post/create', formDataToSend, {
+      .post('http://wandertour.ddns.net:5000/post/create', formDataToSend, {
         headers: {     
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'multipart/form-data',

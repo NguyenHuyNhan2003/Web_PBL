@@ -40,14 +40,14 @@ export default function Detail() {
   const [yeucau, setYeuCau] = useState([])
   const {user} = useAuthContext();
   // useEffect(() => {
-  //   fetch(`http://localhost:5000/post/by/${id}`)
+  //   fetch(`http://wandertour.ddns.net:5000/post/by/${id}`)
   //     .then((result) => result.json())
   //     .then((data) => {
   //       setData(data)
   //     })
   // }, [id])
   useEffect(() => {
-    fetch(`http://localhost:5000/post/recruitment/by/${id}`)
+    fetch(`http://wandertour.ddns.net:5000/post/recruitment/by/${id}`)
       .then((result) => result.json())
       .then((data) => {
         setCongti(data)
@@ -185,7 +185,7 @@ function ApplicationModal({ onClose, onApply, Congti, setApplicationStatus }) {
     console.log('Success:', formData)
     onApply(formData)
     // Gửi yêu cầu POST đến máy chủ
-    fetch('http://localhost:5000/post/sendmail', {
+    fetch('http://wandertour.ddns.net:5000/post/sendmail', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

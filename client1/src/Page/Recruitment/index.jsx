@@ -49,7 +49,7 @@ export default function Recruitment() {
     console.log(selectLuong)
     console.log(vitri)
     fetch(
-      `http://localhost:5000/company/search/all?q=${encodeURIComponent(searchInput)}&diadiem=${encodeURIComponent(
+      `http://wandertour.ddns.net:5000/company/search/all?q=${encodeURIComponent(searchInput)}&diadiem=${encodeURIComponent(
         selectPlace
       )}&luong=${encodeURIComponent(selectLuong)}&vitri=${encodeURIComponent(vitri)}`
     )
