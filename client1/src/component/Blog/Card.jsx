@@ -9,7 +9,7 @@ import styles from './blog.css' // Import the CSS module
 export function Card() {
   const [blog, setBlog] = useState([])
   useEffect(()=>{
-    fetch('http://localhost:5000/blog')
+    fetch('http://wandertour.ddns.net:5000/blog')
         .then((response) => response.json())
         .then((res) => {
           setBlog(res)
@@ -26,7 +26,7 @@ export function Card() {
         {blog.map((item) => (
           <div className='box boxItems' key={item.id}>
             <div className='img'>
-              <img src={`http://localhost:5000/Images_Blog/`+ item.cover} alt='' />
+              <img src={`http://wandertour.ddns.net:5000/Images_Blog/`+ item.cover} alt='' />
             </div>
             <div className='details'>
               <div className='tag'>

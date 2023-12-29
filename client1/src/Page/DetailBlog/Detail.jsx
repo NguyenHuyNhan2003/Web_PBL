@@ -14,7 +14,7 @@ export default function DetailsBlog() {
 
   useEffect(() => {
     // Replace 'http://localhost:5000/blog/by/658d7c5423ad0a5f79f7e387' with your actual API endpoint
-    fetch(`http://localhost:5000/blog/by/${id}`)
+    fetch(`http://wandertour.ddns.net:5000/blog/by/${id}`)
       .then(response => response.json())
       .then(data => setBlogs(data))
       .catch(error => console.error('Error fetching blog data:', error));
@@ -34,7 +34,7 @@ export default function DetailsBlog() {
         <section className='singlePage'>
           <div className='container'>
             <div className='left'>
-              <img src={`http://localhost:5000/Images_Blog/`+blogs.cover} alt='' />
+              <img src={`http://wandertour.ddns.net:5000/Images_Blog/`+blogs.cover} alt='' />
             </div>
             <div className='right'>
               <div className='buttons'>
