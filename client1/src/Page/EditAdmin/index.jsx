@@ -15,7 +15,7 @@ export default function Edit() {
   // lấy dữ liệu về
   const { _id } = useParams()
   const navigate = useNavigate()
-  const api = `http://localhost:5000/post/edit/recruitment/${_id}`
+  const api = `http://wandertour.ddns.net:5000/post/edit/recruitment/${_id}`
   const [formData, setFormData] = useState({
     congti: '',
     luong: '',
@@ -67,7 +67,7 @@ export default function Edit() {
     // Xử lý dữ liệu biểu mẫu, ví dụ: gửi dữ liệu đến máy chủ hoặc thực hiện các thao tác khác
     console.log('Submitted data:', formData)
     axios
-      .post('http://localhost:5000/post/create', formData, {
+      .post('http://wandertour.ddns.net:5000/post/create', formData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user.token}`
@@ -80,7 +80,7 @@ export default function Edit() {
         console.error('Error:', error)
       })
     axios
-      .put(`http://localhost:5000/post/update/recruitment/${_id}`, formData, {
+      .put(`http://wandertour.ddns.net:5000/post/update/recruitment/${_id}`, formData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user.token}`

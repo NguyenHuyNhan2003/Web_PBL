@@ -42,7 +42,7 @@ import { users } from './data'
 // }
 
 function Analisic() {
-  const apiUrl = 'http://localhost:5000/data/view/'
+  const apiUrl = 'http://wandertour.ddns.net:5000/data/view/'
   const [total, setTotal] = useState([])
   useEffect(() => {
     fetch(apiUrl)
@@ -74,7 +74,7 @@ function App() {
   const rowsPerPage = 4
 
   // Đặt URL của API của bạn ở đây
-  const apiUrl = 'http://localhost:5000/data/react'
+  const apiUrl = 'http://wandertour.ddns.net:5000/data/react'
 
   useEffect(() => {
     // Hàm fetch dữ liệu từ API
@@ -112,7 +112,7 @@ function AnalisicPost() {
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
   const rowsPerPage = 2
-  const api = ' http://localhost:5000/Post/'
+  const api = ' http://wandertour.ddns.net:5000/Post/'
 
   // const [DaTa, setDaTa] = useState([])
 

@@ -131,7 +131,7 @@ const App1 = ({ selectPlace }) => {
   useEffect(() => {
     if (selectPlace == 'all' || selectPlace == '') {
       console.log('1')
-      fetch('http://localhost:5000/company')
+      fetch('http://wandertour.ddns.net:5000/company')
         .then((response) => response.json())
         .then((res) => {
           setData(res)
@@ -141,7 +141,7 @@ const App1 = ({ selectPlace }) => {
         })
     } else {
       console.log(selectPlace)
-      fetch(`http://localhost:5000/company/search?q=${encodeURIComponent(selectPlace)}`)
+      fetch(`http://wandertour.ddns.net:5000/company/search?q=${encodeURIComponent(selectPlace)}`)
         .then((response) => response.json())
         .then((res) => {
           setData(res)
