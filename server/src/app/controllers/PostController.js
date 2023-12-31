@@ -13,6 +13,19 @@ const multer = require("multer");
 const path = require("path");
 require("dotenv").config();
 
+const storage = multer.memoryStorage();
+
+const upload = multer({
+  storage: storage,
+  fileFilter: (res, file, cb) =>{
+    if(file.mimetype === 'application/pdf'){
+      cb(null, true);
+    }else{
+      cb(new Error('Only PDF files are allowed'));
+    }
+  }
+}).single('cv');
+
 class PostController {
   // post upload
   constructor() {
@@ -193,49 +206,60 @@ const { congti, luong, vitri, khuvuc, level, timedang, language, id, soluong, ki
   }
 
   send_gmail = async (req, res) => {
-    const { cv, congti, email, fullname, introduction, phonenumber } = req.body;
-    //https://ethereal.email/create tạo email để test
-    const sender = process.env.EMAIL;
+    try{
+      await upload(req, res, (err) =>{
+        if(err){
+          res.status(500).json({error: err.message});
+        }
+        const { cv, congti, email, fullname, introduction, phonenumber } = req.body;
+        //https://ethereal.email/create tạo email để test
+        const sender = process.env.EMAIL;
 
-    const config = {
-      service: "gmail",
-      auth: {
-        user: sender,
-        pass: process.env.MAIL_PASS,
-      },
-    };
-    const transporter = nodemailer.createTransport(config);
-
-    const mail = {
-      from: sender,
-      to: email,
-      subject: "ĐĂNG KÝ ỨNG TUYỂN",
-      text:
-        "Company: " +
-        congti +
-        "\n" +
-        "Email: " +
-        email +
-        "\n" +
-        "Name: " +
-        fullname +
-        "\n" +
-        "Introduction: " +
-        introduction +
-        "\n" +
-        "Phone number: " +
-        phonenumber +
-        "\n",
-    };
-
-    transporter
-      .sendMail(mail)
-      .then((result) => {
-        res.status(200).json({ result });
-      })
-      .catch((error) => {
-        res.status(400).json({ error: error.message });
+        const config = {
+          service: "gmail",
+          auth: {
+            user: sender,
+            pass: process.env.MAIL_PASS,
+          },
+        };
+        const transporter = nodemailer.createTransport(config);
+        const mail = {
+          from: sender,
+          to: email,
+          subject: "ĐĂNG KÝ ỨNG TUYỂN",
+          text:
+            "Company: " +
+            congti +
+            "\n" +
+            "Email: " +
+            email +
+            "\n" +
+            "Name: " +
+            fullname +
+            "\n" +
+            "Introduction: " +
+            introduction +
+            "\n" +
+            "Phone number: " +
+            phonenumber +
+            "\n",
+          attachments:[
+            {
+              filename: 'cv.pdf',
+              content: req.file.buffer,
+              encoding: 'base64'
+            }
+          ]
+        };
+        transporter.sendMail(mail).then((result) => {
+            res.status(200).json({ result });
+          }).catch((error) => {
+            res.status(400).json({ error: error.message });
+          });
       });
+    }catch(error){
+      res.status(500).json({error: error.message});
+    }
   };
 
   commentPost = async (req, res, next) => {
