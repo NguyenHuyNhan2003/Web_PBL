@@ -15,14 +15,14 @@ import requests
 from time import sleep
 from tkinter import *
 
-userName = '102210267@sv1.dut.udn.vn' # email or phone number
+userName = 'leone.skiles18@ethereal.email' # email or phone number
 passWord = 'fbpw123!' # password
 pageNumber = 3 # number of pages to crawl
 mongoURI = 'mongodb://localhost:27017'
 DATABASE_NAME = "PBL4"
 today = datetime.now().strftime("%Y-%m-%d")
 
-def save_excel_to_mongoDB(path):
+def save_csv_to_mongoDB(path):
     try:
         # connect to mongodb
         client = MongoClient(mongoURI)
@@ -31,11 +31,11 @@ def save_excel_to_mongoDB(path):
         if client.server_info():
             print("Connected to MongoDB!")
         # read excel file
-        df = pd.read_excel(path)
+        df = pd.read_csv(path)
         data = df.to_dict('records')
         # insert data to mongodb
-        collection.delete_many({}) #delete old posts
-        collection.insert_many(data)
+        # collection.delete_many({}) #delete old posts
+        # collection.insert_many(data)
         print("Inserted ", len(data), " posts to MongoDB!")
     except Exception as e:
         print(f"Error: {e}")
@@ -43,11 +43,11 @@ def save_excel_to_mongoDB(path):
         client.close()
         print("Connection closed!")
 
-def save_to_excel(post_list, filename, folderPath):
+def save_to_csv(post_list, filename, folderPath):
     path = folderPath + filename
     if os.path.exists(path):
         # load the existing data from the file
-        post_df_full = pd.read_excel(path)
+        post_df_full = pd.read_csv(path)
     else:
         # create a new DataFrame if the file doesn't exist
         post_df_full = pd.DataFrame(columns=[])
@@ -56,11 +56,11 @@ def save_to_excel(post_list, filename, folderPath):
         post_entry = post
         fb_post_df = pd.DataFrame.from_dict(post_entry, orient='index')
         fb_post_df = fb_post_df.transpose()
-        post_df_full = post_df_full._append(fb_post_df)
+        post_df_full = pd.concat([post_df_full, fb_post_df], ignore_index=True)
 
-    post_df_full.to_excel(path, index=False)    
+    post_df_full.to_csv(path, index=False)    
     print("Saved ", len(post_list))
-    save_excel_to_mongoDB(path)
+    save_csv_to_mongoDB(path)
 
 def writeFileTxt(fileName, content):
     with open(fileName, 'a') as f1:
@@ -293,13 +293,13 @@ def crawler(group):
     if(isLogin == False):
         loginFB(driver, userName, passWord)
         
-    filename = group + "_" + today + "_posts.xlsx"
+    filename = group + "_" + today + "_posts.csv"
     folderPath = "./result/"
     
     idList = get_ID_List(driver, group)
     postList = crawlPostData(driver, idList, group)
     if(postList != False):
-        save_to_excel(postList, filename, folderPath)
+        save_to_csv(postList, filename, folderPath)
         driver.close()
         print('Done!')
         return True
