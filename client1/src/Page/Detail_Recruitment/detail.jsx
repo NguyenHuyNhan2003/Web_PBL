@@ -171,26 +171,35 @@ function ApplicationModal({ onClose, onApply, Congti, setApplicationStatus }) {
     fullname: '',
     email: '',
     phonenumber: '',
-    cv: '',
+    cv: null,
     introduction: '',
     congti: Congti.congti
   })
   console.log(formData)
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prevData) => ({ ...prevData, [name]: value }))
+    const { name, value, files } = e.target
+    if(name === 'cv'){
+      setFormData((prevData) => ({ ...prevData, [name]: files[0] || null }))
+    }else{
+      setFormData((prevData) => ({ ...prevData, [name]: value }))
+    }
   }
   const handleSubmit = () => {
     // Thực hiện các logic xử lý form (ví dụ: gửi yêu cầu đến máy chủ)
     console.log('Success:', formData)
-    onApply(formData)
+    //onApply(formData)
+    const formDataToSend = new FormData()
+
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataToSend.append(key, value)
+    })
     // Gửi yêu cầu POST đến máy chủ
     fetch('http://wandertour.ddns.net:5000/post/sendmail', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
+      // headers: {
+      //   'Content-Type': 'application/json'
+      // },
+      body: formDataToSend
     })
       .then((response) => response.json())
       .then((data) => {
@@ -229,7 +238,7 @@ function ApplicationModal({ onClose, onApply, Congti, setApplicationStatus }) {
           </label>
           <label>
             CV ứng tuyển:
-            <input type='file' name='cv' onChange={handleChange}  />
+            <input type='file' name='cv' accept='.pdf' onChange={handleChange}  />
           </label>
           <label>
             Đoạn giới thiệu bản thân:
