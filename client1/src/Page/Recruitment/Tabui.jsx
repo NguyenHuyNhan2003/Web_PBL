@@ -4,7 +4,8 @@ import Cards from './Card/Card'
 import { useState, useEffect } from 'react'
 import { Image, Button, Slider, Tabs, Tab, Card, CardBody  } from '@nextui-org/react'
 
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { HeartIcon } from './Card/HeartIcon'
 
 import {
@@ -122,6 +123,10 @@ const App1 = ({ selectPlace }) => {
     setLiked((prevLiked) => {
       const newLiked = [...prevLiked]
       newLiked[index] = !newLiked[index]
+      toast.success(`Yêu thích ${index}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1500 // Thời gian hiển thị thông báo trong mili giây
+      });
       return newLiked
     })
   }
@@ -154,7 +159,7 @@ const App1 = ({ selectPlace }) => {
   return (
     <div className='flex flex-wrap justify-center'>
       {data.map((element, index) => (
-        <MusicCard key={index} liked={liked[index]} onToggleLike={() => handleToggleLike(index)} data={element} />
+        <MusicCard key={index} liked={liked[index]} onToggleLike={() => handleToggleLike(element.congti)} data={element} />
       ))}
     </div>
   )

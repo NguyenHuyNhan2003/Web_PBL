@@ -4,6 +4,8 @@ import { useLogin } from '../../hook/useLogin'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
+import giaodienlogin  from '../../css/img/backgroundep.jpg'
 export default function LoginPage() {
   const {login,error,isLoading} = useLogin();
 
@@ -29,7 +31,13 @@ export default function LoginPage() {
 
 
   return (
-    <div className='bg-gray-100 min-h-screen'>
+    <div className='bg-gray-100 min-h-screen'
+    style={{
+      backgroundImage: `url(${giaodienlogin})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}
+    >
       {/* Thêm một div chứa toàn bộ nội dung */}
       <div className='container'>
         <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-32 lg:pr-10'>

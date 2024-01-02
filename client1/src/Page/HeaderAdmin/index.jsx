@@ -38,10 +38,6 @@ export default function App() {
             Thêm Bài
           </Link>
         </NavbarItem>
-
-        <NavbarItem>
-          <Dropdown chucnang={chucnang} />
-        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent justify='end' style={{}}>

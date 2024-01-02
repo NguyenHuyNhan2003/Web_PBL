@@ -8,7 +8,8 @@ import { RepeatOneIcon } from './RepeatOneIcon'
 import { ShuffleIcon } from './ShuffleIcon'
 import axios from 'axios'
 import PAgination from '../../../Pagination.js'
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import {
   Table,
   TableHeader,
@@ -37,7 +38,7 @@ const MusicCard = ({ liked, onToggleLike, data }) => (
             <div className='flex flex-col gap-0'>
               <h3 className='font-semibold text-foreground/90'>
                 {' '}
-                <a href={`/post/by/${data.id}`} style={{ fontSize: '20px' }}>
+                <a href={`/post/by/${data._id}`} style={{ fontSize: '20px' }}>
                   {data.vitri}
                 </a>
               </h3>
@@ -94,6 +95,10 @@ const App = ({ data, setData }) => {
     setLiked((prevLiked) => {
       const newLiked = [...prevLiked]
       newLiked[index] = !newLiked[index]
+      toast.success(`Yêu thích ${index}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1500 // Thời gian hiển thị thông báo trong mili giây
+      });
       return newLiked
     })
   }
@@ -120,7 +125,7 @@ const App = ({ data, setData }) => {
     <div>
       <div className='flex flex-wrap justify-center'>
         {currentPost.map((element, index) => (
-          <MusicCard key={index} liked={liked[index]} onToggleLike={() => handleToggleLike(index)} data={element} />
+          <MusicCard key={index} liked={liked[index]} onToggleLike={() => handleToggleLike(element.congti)} data={element} />
         ))}
       </div>
       <PAgination
