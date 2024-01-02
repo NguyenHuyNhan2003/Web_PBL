@@ -34,8 +34,8 @@ def save_csv_to_mongoDB(path):
         df = pd.read_csv(path)
         data = df.to_dict('records')
         # insert data to mongodb
-        # collection.delete_many({}) #delete old posts
-        # collection.insert_many(data)
+        collection.delete_many({}) #delete old posts
+        collection.insert_many(data)
         print("Inserted ", len(data), " posts to MongoDB!")
     except Exception as e:
         print(f"Error: {e}")
