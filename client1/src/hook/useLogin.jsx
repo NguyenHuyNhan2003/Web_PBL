@@ -22,7 +22,8 @@ export const useLogin = () => {
     if (!response.ok) {
       setIsLoading(false)
       toast.error("Login Thât bại !", {
-        position: toast.POSITION.TOP_RIGHT
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000 
       });
       setError(json.error)
       

@@ -7,11 +7,13 @@ import { PreviousIcon } from './PreviousIcon'
 import { RepeatOneIcon } from './RepeatOneIcon'
 import { ShuffleIcon } from './ShuffleIcon'
 import PAgination from '../../../Pagination.js'
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import anhh from '../../../css/img/logo.png'
 import { Link } from 'react-router-dom'
-const MusicCard = ({ liked, onToggleLike, data }) => (
+const MusicCard = ({ liked, onToggleLike, data }) => 
+(
   <Card
     isBlurred
     className='border-none bg-background/60 dark:bg-default-100/50 max-w-[900px] mb-4 mr-8 transition-all hover:bg-foreground/10' // Adjust the max-width value
@@ -64,6 +66,10 @@ const App = ({ data }) => {
     setLiked((prevLiked) => {
       const newLiked = [...prevLiked]
       newLiked[index] = !newLiked[index]
+      toast.success(`Yêu thích ${index}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1500 // Thời gian hiển thị thông báo trong mili giây
+      });
       return newLiked
     })
   }
@@ -73,7 +79,7 @@ const App = ({ data }) => {
     <div>
       <div className='flex flex-wrap justify-center'>
       {
-        <MusicCard liked={liked[data.id]} onToggleLike={() => handleToggleLike(data.id)}  data={data}/>
+        <MusicCard liked={liked[data.id]} onToggleLike={() => handleToggleLike(data.congti)}  data={data}/>
 }
       </div>
     </div>

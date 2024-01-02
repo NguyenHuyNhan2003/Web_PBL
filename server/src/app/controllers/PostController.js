@@ -134,7 +134,7 @@ class PostController {
   getrecruitmentbyid(req, res, next) {
     const idd = req.params.id;
     console.log(idd);
-    Recruitment.findOne({ id: idd })
+    Recruitment.findById({ _id: idd })
       .then((element) => {
         console.log(element);
         res.json(element);

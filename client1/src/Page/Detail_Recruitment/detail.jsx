@@ -47,11 +47,10 @@ export default function Detail() {
   //     })
   // }, [id])
   useEffect(() => {
-    fetch(`http://wandertour.ddns.net:5000/post/recruitment/by/${id}`)
+    fetch(`http://localhost:5000/post/recruitment/by/${id}`)
       .then((result) => result.json())
       .then((data) => {
         setCongti(data)
-   
       })
   },[id])
 
@@ -409,3 +408,5 @@ const YourComponent = ({ Congti }) => {
     </div>
   )
 }
+
+//  fetch(`http://wandertour.ddns.net:5000/post/recruitment/by/${id}`)

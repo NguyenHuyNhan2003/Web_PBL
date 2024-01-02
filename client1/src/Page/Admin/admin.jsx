@@ -2,7 +2,7 @@ import './admin.css'
 import React, { useEffect, useState } from 'react'
 import './JobPostingForm.css'
 import axios from 'axios'
-import { useRef  } from 'react'
+import { useRef } from 'react'
 import {
   successNotification,
   errorNotification,
@@ -60,7 +60,7 @@ export default function Admin() {
   const pages = Math.ceil(data.length / rowsPerPage)
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage
-    const end = (start + rowsPerPage)
+    const end = start + rowsPerPage
 
     return data.slice(start, end)
   }, [page, data])
@@ -70,7 +70,7 @@ export default function Admin() {
     <div className='admin-container'>
       <div className='admin'>
         <div className='left-column'>
-          <h1 className='heading-admin' style={{ marginLeft: '60px', bottom: '20px' }}>
+          <h1 className='heading-admin' style={{ marginLeft: '60px', bottom: '20px', color:'blue' }}>
             Danh Sách Bài Post
           </h1>
 
@@ -127,7 +127,7 @@ export default function Admin() {
 
         <div className='right-column'>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <h2>Thêm Tuyển Dụng</h2>
+            <h2 style={{color:'blue'}}>Thêm Tuyển Dụng</h2>
           </div>
           <JobPostingForm />
         </div>
@@ -138,7 +138,7 @@ export default function Admin() {
 // Import file CSS nếu cần
 
 function JobPostingForm() {
-  const fileImage = useRef(null);
+  const fileImage = useRef(null)
   const [error, setError] = useState(null)
   const { user } = useAuthContext()
   const [formData, setFormData] = useState({
@@ -223,9 +223,9 @@ function JobPostingForm() {
 
     axios
       .post('http://wandertour.ddns.net:5000/post/create', formDataToSend, {
-        headers: {     
+        headers: {
           Authorization: `Bearer ${user.token}`,
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data'
         }
       })
       .then((response) => {
@@ -246,16 +246,15 @@ function JobPostingForm() {
             timedang: '',
             language: '',
             id: '',
-            mota :'',
-            yeucau:'',
-            bangcap:'',
-            kinhnghiem:'',
-            soluong:'',
-            anh : ''
-
-          });
-          // reset 
-          fileImage.current.value = null;
+            mota: '',
+            yeucau: '',
+            bangcap: '',
+            kinhnghiem: '',
+            soluong: '',
+            anh: ''
+          })
+          // reset
+          fileImage.current.value = null
         } else {
           // Xử lý trường hợp không thành công
           console.error('Error:', response.status, response.statusText)
@@ -269,183 +268,234 @@ function JobPostingForm() {
       })
   }
 
+  const [isVisible, setIsVisible] = useState(false)
+
+  const handleScroll = () => {
+    // Kiểm tra giá trị cuộn
+    if (window.scrollY > 200) {
+      // Nếu vị trí cuộn lớn hơn 500px, hiển thị button
+      setIsVisible(true)
+    } else {
+      // Ngược lại, ẩn button
+      setIsVisible(false)
+    }
+  }
+
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    // Gắn sự kiện cuộn khi component được mount
+    window.addEventListener('scroll', handleScroll)
+
+    // Hủy sự kiện khi component bị unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, []) // [] đảm bảo sự kiện chỉ được gắn một lần khi component được mount
+
   return (
-    <form className='vertical-form' onSubmit={handleSubmit}>
-      <div className='form-group'>
-        <label htmlFor='companyName'>Tên Công Ty:</label>
-        <input
-          className='input-admin'
-          type='text'
-          id='companyName'
-          name='congti'
-          value={formData.congti}
-          onChange={handleChange}
-          required
-        />
-      </div>
+    <>
+      <form className='vertical-form' onSubmit={handleSubmit}>
+        <div className='form-group'>
+          <label htmlFor='companyName'>Tên Công Ty:</label>
+          <input
+            className='input-admin'
+            type='text'
+            id='companyName'
+            name='congti'
+            value={formData.congti}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <div className='form-group'>
-        <label htmlFor='salary'>Lương:</label>
-        <input
-          className='input-admin'
-          type='text'
-          id='salary'
-          name='luong'
-          value={formData.luong}
-          onChange={handleChange}
-          required
-        />
-      </div>
+        <div className='form-group'>
+          <label htmlFor='salary'>Lương:</label>
+          <input
+            className='input-admin'
+            type='text'
+            id='salary'
+            name='luong'
+            value={formData.luong}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <div className='form-group'>
-        <label htmlFor='position'>Vị Trí Tuyển Dụng:</label>
-        <input
-          className='input-admin'
-          type='text'
-          id='position'
-          name='vitri'
-          value={formData.vitri}
-          onChange={handleChange}
-          required
-        />
-      </div>
+        <div className='form-group'>
+          <label htmlFor='position'>Vị Trí Tuyển Dụng:</label>
+          <input
+            className='input-admin'
+            type='text'
+            id='position'
+            name='vitri'
+            value={formData.vitri}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <div className='form-group'>
-        <label htmlFor='region'>Khu Vực:</label>
-        <input
-          className='input-admin'
-          type='text'
-          id='region'
-          name='khuvuc'
-          value={formData.khuvuc}
-          onChange={handleChange}
-          required
-        />
-      </div>
+        <div className='form-group'>
+          <label htmlFor='region'>Khu Vực:</label>
+          <input
+            className='input-admin'
+            type='text'
+            id='region'
+            name='khuvuc'
+            value={formData.khuvuc}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <div className='form-group'>
-        <label htmlFor='level'>Level:</label>
-        <select id='level' name='level' value={formData.level} onChange={handleChange} required>
-          <option value='entry'>Entry Level</option>
-          <option value='midle'>Mid Level</option>
-          <option value='senior'>Senior Level</option>
-        </select>
-      </div>
+        <div className='form-group'>
+          <label htmlFor='level'>Level:</label>
+          <select id='level' name='level' value={formData.level} onChange={handleChange} required>
+            <option value='entry'>Entry Level</option>
+            <option value='midle'>Mid Level</option>
+            <option value='senior'>Senior Level</option>
+          </select>
+        </div>
 
-      <div className='form-group'>
-        <label htmlFor='skills'>Ảnh:</label>
-        <input
-        ref = {fileImage}
-          className='input-admin'
-          type='file' // Change the input type to file
-          id='skills'
-          name='anh'
-          onChange={handleChange} // Update the onChange handler
-          required
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='skills'>Language</label>
-        <input
-          className='input-admin'
-          type='text'
-          id='language'
-          name='language'
-          value={formData.language}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='skills'>IdPost</label>
-        <input
-          className='input-admin'
-          type='text'
-          id='idpost'
-          name='id'
-          value={formData.id}
-          onChange={handleChange}
-          required
-        />
-      </div>
+        <div className='form-group'>
+          <label htmlFor='skills'>Ảnh:</label>
+          <input
+            ref={fileImage}
+            className='input-admin'
+            type='file' // Change the input type to file
+            id='skills'
+            name='anh'
+            onChange={handleChange} // Update the onChange handler
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='skills'>Language</label>
+          <input
+            className='input-admin'
+            type='text'
+            id='language'
+            name='language'
+            value={formData.language}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='skills'>IdPost</label>
+          <input
+            className='input-admin'
+            type='text'
+            id='idpost'
+            name='id'
+            value={formData.id}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <div className='form-group'>
-        <label htmlFor='postingTime'>Thời Gian Đăng:</label>
-        <input
-          className='input-admin'
-          type='date'
-          id='postingTime'
-          name='timedang'
-          value={formData.timedang}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='skills'>Số lượng</label>
-        <input
-          className='input-admin'
-          type='text'
-          id='soluong'
-          name='soluong'
-          value={formData.soluong}
-          onChange={handleChange}
-          required
-        />
-      </div>
+        <div className='form-group'>
+          <label htmlFor='postingTime'>Thời Gian Đăng:</label>
+          <input
+            className='input-admin'
+            type='date'
+            id='postingTime'
+            name='timedang'
+            value={formData.timedang}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='skills'>Số lượng</label>
+          <input
+            className='input-admin'
+            type='text'
+            id='soluong'
+            name='soluong'
+            value={formData.soluong}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <div className='form-group'>
-        <label htmlFor='skills'>Kinh Nghiệm</label>
-        <input
-          className='input-admin'
-          type='text'
-          id='kinhnghiem'
-          name='kinhnghiem'
-          value={formData.kinhnghiem}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='skills'>Bằng Cấp</label>
-        <input
-          className='input-admin'
-          type='text'
-          id='bangcap'
-          name='bangcap'
-          value={formData.bangcap}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='skills'>Mô Tả </label>
-        <textarea
-          className='input-admin'
-          id='mota'
-          name='mota'
-          value={formData.mota}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='skills'>Yêu cầu</label>
-        <textarea
-          className='input-admin'
-          id='yeucau'
-          name='yeucau'
-          value={formData.yeucau}
-          onChange={handleChange}
-          required
-        />
-      </div>
+        <div className='form-group'>
+          <label htmlFor='skills'>Kinh Nghiệm</label>
+          <input
+            className='input-admin'
+            type='text'
+            id='kinhnghiem'
+            name='kinhnghiem'
+            value={formData.kinhnghiem}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='skills'>Bằng Cấp</label>
+          <input
+            className='input-admin'
+            type='text'
+            id='bangcap'
+            name='bangcap'
+            value={formData.bangcap}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='skills'>Mô Tả </label>
+          <textarea
+            className='input-admin'
+            id='mota'
+            name='mota'
+            value={formData.mota}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='skills'>Yêu cầu</label>
+          <textarea
+            className='input-admin'
+            id='yeucau'
+            name='yeucau'
+            value={formData.yeucau}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <button style={{ background: 'yellow' }} type='submit'>
-        Đăng Tuyển Dụng
-      </button>
-      {error && <div className='error'>{error}</div>}
-    </form>
+        <button style={{ background: 'yellow' }} type='submit'>
+          Đăng Tuyển Dụng
+        </button>
+        {error && <div className='error'>{error}</div>}
+      </form>
+
+      <div>
+        <button
+          className={`fixed bottom-[9.5rem] right-6 z-30 inline-flex h-12 w-12 items-center justify-center rounded
+border border-solid border-primary-200 bg-primary/80 text-2xl text-white transition-all hover:bg-primary
+lg:bottom-32 lg:right-10 ${isVisible ? 'visible opacity-100' : 'invisible opacity-0'}`}
+          type='button'
+          onClick={handleScrollToTop}
+        >
+          <svg
+            stroke='currentColor'
+            fill='currentColor'
+            stroke-width='0'
+            viewBox='0 0 24 24'
+            height='1em'
+            width='1em'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path d='M5 15h4v6h6v-6h4l-7-8zM4 3h16v2H4z'></path>
+          </svg>
+        </button>
+      </div>
+    </>
   )
 }
 
