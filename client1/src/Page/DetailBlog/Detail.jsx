@@ -20,21 +20,13 @@ export default function DetailsBlog() {
       .catch(error => console.error('Error fetching blog data:', error));
   }, []);
 
-  // useEffect(() => {
-  //   let blogs = blog.find((blogs) => blogs.id === parseInt(id))
-  //   if (blogs) {
-  //     setBlogs(blogs)
-  //   }
-  // }, [])
-  // console.log(blogs.desc)
-
   return (
     <>
       {blogs ? (
         <section className='singlePage'>
           <div className='container'>
             <div className='left'>
-              <img src={`http://wandertour.ddns.net:5000/Images_Blog/`+blogs.cover} alt='' />
+              <img src={`http://wandertour.ddns.net:5000/Images_Blog/`+blogs.cover} alt=''  style={{ width: '500px', margin: '0 auto', display: 'block' }} />
             </div>
             <div className='right'>
               <div className='buttons'>

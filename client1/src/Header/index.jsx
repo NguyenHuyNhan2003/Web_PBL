@@ -98,10 +98,10 @@ export default function Header() {
         <NavbarItem>
           <RouterLink
             to='/CV'
-            className={`text-${activeItem === 'BlogIt' ? 'active' : 'foreground'}`}
-            onClick={() => handleItemClick('BlogIt')}
+            className={`text-${activeItem === 'CV' ? 'active' : 'foreground'}`}
+            onClick={() => handleItemClick('CV')}
           >
-            Tạo VC
+            Tạo CV
           </RouterLink>
         </NavbarItem>
 
