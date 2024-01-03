@@ -95,6 +95,17 @@ export default function Header() {
           </RouterLink>
         </NavbarItem>
 
+        <NavbarItem>
+          <RouterLink
+            to='/CV'
+            className={`text-${activeItem === 'BlogIt' ? 'active' : 'foreground'}`}
+            onClick={() => handleItemClick('BlogIt')}
+          >
+            Tạo VC
+          </RouterLink>
+        </NavbarItem>
+
+
         <ul className='flex text-white'>
           <li className='group relative'>
             <a href='#' className='dropbtn cursor-pointer py-6' style={{ color: 'black' }}>

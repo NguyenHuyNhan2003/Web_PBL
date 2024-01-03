@@ -11138,6 +11138,13 @@
     "prop-types" "^15.6.0"
     "warning" "^4.0.1"
 
+"react-feather@^2.0.10":
+  "integrity" "sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ=="
+  "resolved" "https://registry.npmjs.org/react-feather/-/react-feather-2.0.10.tgz"
+  "version" "2.0.10"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-hook-form@^7.48.2":
   "integrity" "sha512-H0T2InFQb1hX7qKtDIZmvpU1Xfn/bdahWBN1fH19gSe4bBEqTfmlr7H3XWTaVtiK4/tpPaI1F3355GPMZYge+A=="
   "resolved" "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.48.2.tgz"
@@ -11399,6 +11406,11 @@
     "@babel/runtime" "^7.20.13"
     "use-composed-ref" "^1.3.0"
     "use-latest" "^1.2.1"
+
+"react-to-print@^2.14.15":
+  "integrity" "sha512-SKnwOzU2cJ8eaAkoJO7+gNhvfEDmm+Y34IdcHsjtHioUevUPhprqbVtvNJlZ2JkGJ8ExK2QNWM9pXECTDR5D8w=="
+  "resolved" "https://registry.npmjs.org/react-to-print/-/react-to-print-2.14.15.tgz"
+  "version" "2.14.15"
 
 "react-toastify@^9.1.3":
   "integrity" "sha512-fPfb8ghtn/XMxw3LkxQBk3IyagNpF/LIKjOBflbexr2AWxAH1MJgvnESwEwBn9liLFXgTKWgBSdZpw9m4OTHTg=="

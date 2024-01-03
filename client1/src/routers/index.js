@@ -14,6 +14,7 @@ import Signup from '../Page/Signup/index.jsx'
 import BlogIT from '../Page/BlogIT/index.jsx'
 import Congti from '../Page/Company/index.jsx'
 import DetailsBlog from '../Page/DetailBlog/Detail.jsx'
+import CV from '../Page/CV/CV.jsx'
 const publicRouter = [
   { path: '/Edit/recruitment/:_id', commponent: EditAdmin, Layout: 'Admin' },
   { path: '/', commponent: Home },
@@ -24,6 +25,7 @@ const publicRouter = [
   {path: '/Congti', commponent: Congti },
   {path: '/details/:id', commponent: DetailsBlog},
   { path: '/post/by/:id', commponent: Detail },
+  { path: '/CV', commponent: CV },
   { path: '/conpany/name/:company', commponent: Detailcompany },
   { path: '/Admin', commponent: Admin, Layout: 'Admin' },
   { path: '/AddPost', commponent: Admin, Layout: 'Admin' },
