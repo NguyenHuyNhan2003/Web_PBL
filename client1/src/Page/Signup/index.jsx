@@ -2,6 +2,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useSignup } from '../../hook/useSignup'
 import giaodienlogin from '../../css/img/backgroundep.jpg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
+import React, { useState } from 'react'
 export default function LoginPage() {
   const { signup, error, isLoading } = useSignup()
 
@@ -12,7 +15,11 @@ export default function LoginPage() {
     reset,
     formState: { errors }
   } = useForm()
+  const [passwordvisible, setpasswordvisible] = useState('true')
 
+  const togglePasswordVisibility = () => {
+    setpasswordvisible(!passwordvisible)
+  }
   const onSubmit = async (data) => {
     console.log(data.email)
     console.log(data.password)
@@ -41,13 +48,23 @@ export default function LoginPage() {
                 className='mt-8 p-2 rounded border border-gray-300 w-full'
                 placeholder='Email'
               />
-              <input
-                {...register('password')}
-                type='password'
-                className='mt-2 p-2 rounded border border-gray-300 w-full'
-                placeholder='Password'
-                autoComplete='on'
-              />
+            
+              <div className='relative'>
+                <input
+                  {...register('password')}
+                  type={passwordvisible ?   'password':'text'}
+                  className='mt-2 p-2 rounded border border-gray-300 w-full pr-10'
+                  placeholder='Password'
+                  autoComplete='on'
+                />
+                <label
+                  className='absolute inset-y-0 right-0 flex items-center px-2 cursor-pointer top-1/2 transform -translate-y-1/2'
+                  onClick={togglePasswordVisibility}
+                >
+                  <FontAwesomeIcon icon={passwordvisible ?  faEyeSlash: faEye} />
+                </label>
+              </div>
+
               <div className='mt-3'>
                 <button
                   type='submit'
@@ -64,3 +81,11 @@ export default function LoginPage() {
     </div>
   )
 }
+
+
+// {...register('password')}
+// type='password'
+// className='mt-2 p-2 rounded border border-gray-300 w-full'
+// placeholder='Password'
+// autoComplete='on'
+// />

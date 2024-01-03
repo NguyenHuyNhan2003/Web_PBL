@@ -1,14 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useLogin } from '../../hook/useLogin'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
+import React, { useState } from 'react'
 
-
-import giaodienlogin  from '../../css/img/backgroundep.jpg'
+import giaodienlogin from '../../css/img/backgroundep.jpg'
 export default function LoginPage() {
-  const {login,error,isLoading} = useLogin();
-
+  const { login, error, isLoading } = useLogin()
 
   const navigate = useNavigate()
   const {
@@ -19,24 +20,26 @@ export default function LoginPage() {
   } = useForm()
 
   const onSubmit = async (data) => {
-    console.log(data.email);
-    console.log(data.password);
-    
+    console.log(data.email)
+    console.log(data.password)
 
-    await login(data.email,data.password)
+    await login(data.email, data.password)
     reset()
-  
   }
 
+  const [passwordvisible, setpasswordvisible] = useState('true')
 
-
+  const togglePasswordVisibility = () => {
+    setpasswordvisible(!passwordvisible)
+  }
   return (
-    <div className='bg-gray-100 min-h-screen'
-    style={{
-      backgroundImage: `url(${giaodienlogin})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
-    }}
+    <div
+      className='bg-gray-100 min-h-screen'
+      style={{
+        backgroundImage: `url(${giaodienlogin})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
     >
       {/* Thêm một div chứa toàn bộ nội dung */}
       <div className='container'>
@@ -50,19 +53,28 @@ export default function LoginPage() {
                 className='mt-8 p-2 rounded border border-gray-300 w-full'
                 placeholder='Email'
               />
-              <input
-                {...register('password')}
-                type='password'
-                className='mt-2 p-2 rounded border border-gray-300 w-full'
-                placeholder='Password'
-                autoComplete='on'
-              />
+              <div className='relative'>
+                <input
+                  {...register('password')}
+                  type={passwordvisible ?   'password':'text'}
+                  className='mt-2 p-2 rounded border border-gray-300 w-full pr-10'
+                  placeholder='Password'
+                  autoComplete='on'
+                />
+                <label
+                  className='absolute inset-y-0 right-0 flex items-center px-2 cursor-pointer top-1/2 transform -translate-y-1/2'
+                  onClick={togglePasswordVisibility}
+                >
+                  <FontAwesomeIcon icon={passwordvisible ?  faEyeSlash: faEye} />
+                </label>
+              </div>
+
               <div className='mt-3'>
                 <button
                   type='submit'
                   className='flex w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600 rounded'
-                  disabled ={isLoading}
-                  >
+                  disabled={isLoading}
+                >
                   Đăng nhập
                 </button>
                 {error && <div className='error'>{error}</div>}
@@ -73,7 +85,6 @@ export default function LoginPage() {
                   Đăng ký
                 </Link>
               </div>
-            
             </form>
           </div>
         </div>
